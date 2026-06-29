@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,91 +10,168 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#0b0f0a">
+<meta name="theme-color" content="#07090a">
+<script>document.documentElement.className="js";</script>
 <style>
-  :root { --ground:#0b0f0a; --panel:#0e140d; --line:#1d2a21;
-    --phosphor:#33ff66; --phosphor-dim:#2bbf57; --ink:#c8d8cd; --muted:#7e9387; }
+  :root {
+    --ground:#07090a; --panel:#0c120c; --line:#18241d;
+    --phosphor:#33ff66; --phosphor-dim:#2bbf57; --ink:#cdddd2; --muted:#73897c;
+    --ok:#33ff66; --warn:#f3c54e; --bad:#ff5f5f;
+  }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--ground); color: var(--ink);
-    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
-    line-height: 1.65; font-size: 15px; -webkit-font-smoothing: antialiased; }
-  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px); opacity: 0.5; }
-  a { color: var(--phosphor); text-decoration: none; border-bottom: 1px solid var(--line); }
-  a:hover { border-bottom-color: var(--phosphor); }
-  a:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 2px; }
-  .wrap { max-width: 660px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 2; }
-  header { text-align: center; padding: clamp(48px, 11vw, 120px) 0 40px; }
-  .wordmark { width: min(560px, 84%); height: auto; display: block; margin: 0 auto;
-    filter: drop-shadow(0 0 10px rgba(51,255,102,0.35)); }
-  .tagline { margin-top: 26px; letter-spacing: 0.2em; color: var(--phosphor); }
-  section { padding: 26px 0; border-top: 1px solid var(--line); }
-  h2 { color: var(--phosphor); font-size: 16px; font-weight: 700; letter-spacing: 0.04em; margin: 0 0 14px; }
-  h2 .p { color: var(--phosphor-dim); margin-right: 8px; }
-  p { margin: 0 0 14px; }
-  .lead { color: #d6e6db; font-size: 16px; }
-  ul { margin: 0; padding-left: 18px; }
-  li { margin: 0 0 9px; }
-  li::marker { color: var(--phosphor-dim); }
-  .verdict { color: var(--phosphor); font-weight: 600; }
-  pre.code { background: var(--panel); border: 1px solid var(--line); border-left: 2px solid var(--phosphor-dim);
-    border-radius: 6px; padding: 14px 16px; overflow-x: auto; font-size: 13px; color: var(--ink); margin: 0; }
-  footer { border-top: 1px solid var(--line); padding: 26px 0 60px; color: var(--muted); font-size: 13px; }
-  footer a { color: var(--phosphor-dim); }
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+    font-family: ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Liberation Mono",monospace;
+    line-height:1.6; -webkit-font-smoothing:antialiased; }
+  body::before { content:""; position:fixed; inset:0; pointer-events:none; z-index:5;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px); opacity:.5; }
+  a { color:var(--phosphor); text-decoration:none; }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--phosphor); outline-offset:3px; }
+
+  .panel { min-height:100vh; scroll-snap-align:start; position:relative;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:7vh 22px; }
+  .inner { max-width:680px; width:100%; }
+  .js .inner { opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s ease; }
+  .js .panel.in .inner { opacity:1; transform:none; }
+
+  /* hero */
+  .wordmark { width:min(560px,86%); height:auto; display:block; margin:0 auto;
+    filter: drop-shadow(0 0 12px rgba(51,255,102,0.4)); }
+  .js .wordmark { animation: flicker 1.3s ease-in-out 1 both; }
+  .tagline { margin-top:26px; letter-spacing:.22em; color:var(--phosphor); font-size:clamp(13px,2.4vw,17px); }
+  .boot { margin-top:30px; color:var(--phosphor-dim); letter-spacing:.08em; font-size:13px; }
+  .track { display:inline-block; width:min(180px,42vw); height:12px; margin:0 9px; vertical-align:middle;
+    border:1px solid var(--line); background:#0a0f0a; position:relative; overflow:hidden; }
+  .fill { position:absolute; inset:0 auto 0 0; width:0; background:var(--phosphor);
+    box-shadow:0 0 10px var(--phosphor); }
+  .js .fill { animation: fill 2.4s ease-out .5s forwards; }
+  .dots::after { content:"..."; }
+  .js .dots::after { content:""; animation: dots 1.5s steps(1,end) infinite; }
+  .cue { position:absolute; bottom:26px; left:0; right:0; color:var(--muted); font-size:18px; }
+  .js .cue { animation: bob 1.9s ease-in-out infinite; }
+
+  /* what */
+  h2 { color:var(--phosphor); font-size:13px; letter-spacing:.28em; text-transform:uppercase;
+    margin:0 0 22px; font-weight:600; }
+  .lead { font-size:clamp(18px,3.6vw,27px); line-height:1.5; color:#e2efe6; margin:0; }
+  .lead b { color:var(--phosphor); font-weight:600; }
+
+  /* verdicts */
+  .verdicts { display:flex; gap:clamp(18px,4vw,46px); flex-wrap:wrap; justify-content:center; }
+  .vcard { width:190px; display:flex; flex-direction:column; align-items:center; }
+  .vcard svg { width:64px; height:64px; transition:transform .25s ease, filter .25s ease; }
+  .vcard .name { margin-top:14px; font-size:14px; letter-spacing:.1em; font-weight:600; }
+  .vcard .vdesc { margin-top:8px; font-size:13px; color:var(--muted); line-height:1.45;
+    opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .3s ease; }
+  .vcard:hover svg, .vcard:focus-within svg { transform:translateY(-4px); filter:drop-shadow(0 0 12px currentColor); }
+  .vcard:hover .vdesc, .vcard:focus-within .vdesc { opacity:1; max-height:120px; }
+  .v-ok { color:var(--ok); } .v-warn { color:var(--warn); } .v-bad { color:var(--bad); }
+  .vcard .name { color:var(--ink); }
+
+  /* getting started */
+  .cmdwrap { position:relative; text-align:left; max-width:600px; margin:0 auto; }
+  pre.cmd { background:var(--panel); border:1px solid var(--line); border-left:2px solid var(--phosphor-dim);
+    border-radius:8px; padding:18px 18px; overflow-x:auto; font-size:13px; color:var(--ink); margin:0; }
+  .copy { position:absolute; top:10px; right:10px; background:#0a0f0a; color:var(--phosphor-dim);
+    border:1px solid var(--line); border-radius:5px; padding:4px 9px; font:inherit; font-size:11px;
+    letter-spacing:.08em; cursor:pointer; }
+  .copy:hover { color:var(--phosphor); border-color:var(--phosphor-dim); }
+
+  /* footer */
+  .foot { position:absolute; bottom:30px; left:0; right:0; display:flex; gap:24px; justify-content:center; }
+  .foot a { color:var(--muted); display:inline-flex; transition:color .2s ease, transform .2s ease; }
+  .foot a:hover { color:var(--phosphor); transform:translateY(-2px); }
+  .foot svg { width:24px; height:24px; }
+
+  @keyframes fill { to { width:38%; } }
+  @keyframes dots { 0%{content:"";}25%{content:".";}50%{content:"..";}75%{content:"...";} }
+  @keyframes bob { 0%,100%{transform:translateY(0);opacity:.45;} 50%{transform:translateY(7px);opacity:1;} }
+  @keyframes flicker { 0%{opacity:0;}8%{opacity:.7;}12%{opacity:.2;}22%{opacity:1;}26%{opacity:.5;}34%{opacity:1;} }
+
+  @media (hover: none) { .vcard .vdesc { opacity:1; max-height:120px; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    .js .inner { opacity:1; transform:none; transition:none; }
+    .js .wordmark, .js .fill, .js .dots::after, .js .cue { animation:none; }
+    .fill { width:38%; } .dots::after { content:"..."; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <svg viewBox="0 0 660 50" role="img" aria-label="holdtrue" xmlns="http://www.w3.org/2000/svg" class="wordmark"><defs><filter id="g" x="-8%" y="-30%" width="116%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="#33ff66" filter="url(#g)"><rect x="0" y="0" width="20" height="10"/><rect x="50" y="0" width="20" height="10"/><rect x="90" y="0" width="60" height="10"/><rect x="170" y="0" width="20" height="10"/><rect x="250" y="0" width="60" height="10"/><rect x="330" y="0" width="80" height="10"/><rect x="420" y="0" width="60" height="10"/><rect x="500" y="0" width="20" height="10"/><rect x="560" y="0" width="20" height="10"/><rect x="590" y="0" width="70" height="10"/><rect x="0" y="10" width="20" height="10"/><rect x="50" y="10" width="20" height="10"/><rect x="80" y="10" width="20" height="10"/><rect x="140" y="10" width="20" height="10"/><rect x="170" y="10" width="20" height="10"/><rect x="250" y="10" width="20" height="10"/><rect x="300" y="10" width="20" height="10"/><rect x="360" y="10" width="20" height="10"/><rect x="420" y="10" width="20" height="10"/><rect x="470" y="10" width="20" height="10"/><rect x="500" y="10" width="20" height="10"/><rect x="560" y="10" width="20" height="10"/><rect x="590" y="10" width="20" height="10"/><rect x="0" y="20" width="70" height="10"/><rect x="80" y="20" width="20" height="10"/><rect x="140" y="20" width="20" height="10"/><rect x="170" y="20" width="20" height="10"/><rect x="250" y="20" width="20" height="10"/><rect x="300" y="20" width="20" height="10"/><rect x="360" y="20" width="20" height="10"/><rect x="420" y="20" width="60" height="10"/><rect x="500" y="20" width="20" height="10"/><rect x="560" y="20" width="20" height="10"/><rect x="590" y="20" width="50" height="10"/><rect x="0" y="30" width="20" height="10"/><rect x="50" y="30" width="20" height="10"/><rect x="80" y="30" width="20" height="10"/><rect x="140" y="30" width="20" height="10"/><rect x="170" y="30" width="20" height="10"/><rect x="250" y="30" width="20" height="10"/><rect x="300" y="30" width="20" height="10"/><rect x="360" y="30" width="20" height="10"/><rect x="420" y="30" width="20" height="10"/><rect x="470" y="30" width="20" height="10"/><rect x="500" y="30" width="20" height="10"/><rect x="560" y="30" width="20" height="10"/><rect x="590" y="30" width="20" height="10"/><rect x="0" y="40" width="20" height="10"/><rect x="50" y="40" width="20" height="10"/><rect x="90" y="40" width="60" height="10"/><rect x="170" y="40" width="70" height="10"/><rect x="250" y="40" width="60" height="10"/><rect x="360" y="40" width="20" height="10"/><rect x="420" y="40" width="20" height="10"/><rect x="470" y="40" width="20" height="10"/><rect x="510" y="40" width="60" height="10"/><rect x="590" y="40" width="70" height="10"/></g></svg>
-    <div class="tagline">prove it. don't read it.</div>
-  </header>
-  <main>
-    <p class="lead">holdtrue checks code against a contract you approve, instead of by reading
-    the code. You review the contract; it tells you what is actually guaranteed.</p>
 
-    <section>
-      <h2><span class="p">#</span>how</h2>
-      <p>You write what you want in plain language. holdtrue turns it into a checkable
-      contract: types, properties, and a spec a solver can prove. You approve it. An
-      implementation is checked against the contract, and you get a verdict for each thing
-      you asked for.</p>
-    </section>
+  <section class="panel" id="hero">
+    <div class="inner">
+      <svg viewBox="0 0 660 50" role="img" aria-label="holdtrue" xmlns="http://www.w3.org/2000/svg" class="wordmark"><defs><filter id="g" x="-8%" y="-30%" width="116%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="#33ff66" filter="url(#g)"><rect x="0" y="0" width="20" height="10"/><rect x="50" y="0" width="20" height="10"/><rect x="90" y="0" width="60" height="10"/><rect x="170" y="0" width="20" height="10"/><rect x="250" y="0" width="60" height="10"/><rect x="330" y="0" width="80" height="10"/><rect x="420" y="0" width="60" height="10"/><rect x="500" y="0" width="20" height="10"/><rect x="560" y="0" width="20" height="10"/><rect x="590" y="0" width="70" height="10"/><rect x="0" y="10" width="20" height="10"/><rect x="50" y="10" width="20" height="10"/><rect x="80" y="10" width="20" height="10"/><rect x="140" y="10" width="20" height="10"/><rect x="170" y="10" width="20" height="10"/><rect x="250" y="10" width="20" height="10"/><rect x="300" y="10" width="20" height="10"/><rect x="360" y="10" width="20" height="10"/><rect x="420" y="10" width="20" height="10"/><rect x="470" y="10" width="20" height="10"/><rect x="500" y="10" width="20" height="10"/><rect x="560" y="10" width="20" height="10"/><rect x="590" y="10" width="20" height="10"/><rect x="0" y="20" width="70" height="10"/><rect x="80" y="20" width="20" height="10"/><rect x="140" y="20" width="20" height="10"/><rect x="170" y="20" width="20" height="10"/><rect x="250" y="20" width="20" height="10"/><rect x="300" y="20" width="20" height="10"/><rect x="360" y="20" width="20" height="10"/><rect x="420" y="20" width="60" height="10"/><rect x="500" y="20" width="20" height="10"/><rect x="560" y="20" width="20" height="10"/><rect x="590" y="20" width="50" height="10"/><rect x="0" y="30" width="20" height="10"/><rect x="50" y="30" width="20" height="10"/><rect x="80" y="30" width="20" height="10"/><rect x="140" y="30" width="20" height="10"/><rect x="170" y="30" width="20" height="10"/><rect x="250" y="30" width="20" height="10"/><rect x="300" y="30" width="20" height="10"/><rect x="360" y="30" width="20" height="10"/><rect x="420" y="30" width="20" height="10"/><rect x="470" y="30" width="20" height="10"/><rect x="500" y="30" width="20" height="10"/><rect x="560" y="30" width="20" height="10"/><rect x="590" y="30" width="20" height="10"/><rect x="0" y="40" width="20" height="10"/><rect x="50" y="40" width="20" height="10"/><rect x="90" y="40" width="60" height="10"/><rect x="170" y="40" width="70" height="10"/><rect x="250" y="40" width="60" height="10"/><rect x="360" y="40" width="20" height="10"/><rect x="420" y="40" width="20" height="10"/><rect x="470" y="40" width="20" height="10"/><rect x="510" y="40" width="60" height="10"/><rect x="590" y="40" width="70" height="10"/></g></svg>
+      <div class="tagline">prove it. don't read it.</div>
+      <div class="boot">[ <span class="track"><span class="fill"></span></span> ] bootstrapping<span class="dots"></span></div>
+    </div>
+    <div class="cue" aria-hidden="true">&#9662;</div>
+  </section>
 
-    <section>
-      <h2><span class="p">#</span>verdicts</h2>
-      <ul>
-        <li><span class="verdict">GUARANTEED</span>: proven over every input, and the
-        contract caught injected bugs. You do not need to read the code.</li>
-        <li><span class="verdict">UNGUARANTEED</span>: only sampled evidence. Still needs
-        human review.</li>
-        <li><span class="verdict">FAILED</span>: a concrete input breaks the contract. You
-        get that input.</li>
-      </ul>
-    </section>
+  <section class="panel" id="what">
+    <div class="inner">
+      <h2>what it is</h2>
+      <p class="lead">holdtrue checks an implementation against a contract you approve, then
+      tells you what is actually <b>guaranteed</b>. You review the contract, not the code.</p>
+    </div>
+  </section>
 
-    <section>
-      <h2><span class="p">$</span>getting started</h2>
-      <p>Python 3.12 and <a href="https://docs.astral.sh/uv/">uv</a>.</p>
-<pre class="code">git clone https://github.com/holdtrue-dev/holdtrue
-cd holdtrue
-uv sync
-uv run holdtrue verify examples/clamp \
+  <section class="panel" id="verdicts">
+    <div class="inner">
+      <h2>the verdict, per intent</h2>
+      <div class="verdicts">
+        <div class="vcard v-ok" tabindex="0">
+          <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><polyline points="20,33 28,42 45,22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="name">GUARANTEED</div>
+          <div class="vdesc">proven over all inputs, and the contract catches injected bugs and rejects broken stand-ins.</div>
+        </div>
+        <div class="vcard v-warn" tabindex="0">
+          <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><circle cx="29" cy="29" r="11" stroke-width="3.5"/><line x1="37" y1="37" x2="46" y2="46" stroke-width="3.5" stroke-linecap="round"/></svg>
+          <div class="name">UNGUARANTEED</div>
+          <div class="vdesc">only sampled evidence. still needs human review.</div>
+        </div>
+        <div class="vcard v-bad" tabindex="0">
+          <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><line x1="23" y1="23" x2="41" y2="41" stroke-width="4.5" stroke-linecap="round"/><line x1="41" y1="23" x2="23" y2="41" stroke-width="4.5" stroke-linecap="round"/></svg>
+          <div class="name">FAILED</div>
+          <div class="vdesc">a counterexample, with the input that breaks it.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="start">
+    <div class="inner">
+      <h2>getting started</h2>
+      <div class="cmdwrap">
+        <button class="copy" type="button" aria-label="copy commands">copy</button>
+<pre class="cmd" id="cmd">git clone https://github.com/holdtrue-dev/holdtrue
+cd holdtrue && uv sync
+uv run python -m holdtrue.cli verify examples/clamp \
   --impl examples/clamp/controls/correct.py</pre>
-    </section>
+      </div>
+    </div>
+    <footer class="foot">
+      <a href="https://github.com/holdtrue-dev/holdtrue" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <a href="mailto:holdtrue-dev@proton.me" aria-label="Email"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></a>
+    </footer>
+  </section>
 
-    <section>
-      <h2><span class="p">#</span>scope</h2>
-      <p>Today it covers Python pure functions over domains a solver can exhaust. Anything it
-      cannot prove, like floats, loops, or IO, comes back UNGUARANTEED, said plainly. Whether
-      the contract matches what you meant is still your call.</p>
-    </section>
-  </main>
-  <footer>
-    <p>code: <a href="https://github.com/holdtrue-dev/holdtrue">github.com/holdtrue-dev/holdtrue</a></p>
-    <p>prove it. don't read it.</p>
-  </footer>
-</div>
+<script>
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting) e.target.classList.add("in"); });
+  }, { threshold: 0.35 });
+  document.querySelectorAll(".panel").forEach(function(p){ io.observe(p); });
+
+  var btn = document.querySelector(".copy");
+  if (btn && navigator.clipboard) {
+    btn.addEventListener("click", function(){
+      var t = document.getElementById("cmd").innerText;
+      navigator.clipboard.writeText(t).then(function(){
+        btn.textContent = "copied"; setTimeout(function(){ btn.textContent = "copy"; }, 1600);
+      });
+    });
+  }
+</script>
 </body>
 </html>
