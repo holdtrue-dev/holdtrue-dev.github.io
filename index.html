@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>holdtrue: prove it, don't read it</title>
-<meta name="description" content="holdtrue checks code against a contract you approve, and tells you what is actually guaranteed. Review the guarantee, not the code.">
+<meta name="description" content="holdtrue checks code against a contract you approve, and tells you what is actually guaranteed.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -12,212 +12,89 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0b0f0a">
 <style>
-  :root {
-    --ground: #0b0f0a; --panel: #0e140d; --line: #1d2a21;
-    --phosphor: #33ff66; --phosphor-dim: #2bbf57;
-    --ink: #c8d8cd; --muted: #7e9387;
-  }
+  :root { --ground:#0b0f0a; --panel:#0e140d; --line:#1d2a21;
+    --phosphor:#33ff66; --phosphor-dim:#2bbf57; --ink:#c8d8cd; --muted:#7e9387; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: var(--ground); color: var(--ink);
+  body { margin: 0; background: var(--ground); color: var(--ink);
     font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
-    line-height: 1.65; font-size: 15px; -webkit-font-smoothing: antialiased;
-  }
-  body::before {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px);
-    opacity: 0.5;
-  }
+    line-height: 1.65; font-size: 15px; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px); opacity: 0.5; }
   a { color: var(--phosphor); text-decoration: none; border-bottom: 1px solid var(--line); }
   a:hover { border-bottom-color: var(--phosphor); }
   a:focus-visible { outline: 2px solid var(--phosphor); outline-offset: 2px; }
-
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 2; }
-
-  header { text-align: center; padding: clamp(40px, 9vw, 96px) 0 36px; }
-  .banner {
-    color: var(--phosphor); font-size: clamp(5px, 1.45vw, 14px); line-height: 1.1;
-    margin: 0 auto; text-shadow: 0 0 12px rgba(51,255,102,0.4); overflow-x: auto; max-width: 100%;
-  }
-  .tagline { margin-top: 22px; letter-spacing: 0.2em; color: var(--phosphor); opacity: 0.95; }
-  nav { margin-top: 26px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; font-size: 13px; }
-  nav a { color: var(--muted); border: none; }
-  nav a:hover { color: var(--phosphor); }
-
-  section { padding: 30px 0; border-top: 1px solid var(--line); }
-  h2 {
-    color: var(--phosphor); font-size: 17px; font-weight: 700; letter-spacing: 0.04em;
-    margin: 0 0 18px;
-  }
+  .wrap { max-width: 660px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 2; }
+  header { text-align: center; padding: clamp(48px, 11vw, 120px) 0 40px; }
+  .wordmark { width: min(560px, 84%); height: auto; display: block; margin: 0 auto;
+    filter: drop-shadow(0 0 10px rgba(51,255,102,0.35)); }
+  .tagline { margin-top: 26px; letter-spacing: 0.2em; color: var(--phosphor); }
+  section { padding: 26px 0; border-top: 1px solid var(--line); }
+  h2 { color: var(--phosphor); font-size: 16px; font-weight: 700; letter-spacing: 0.04em; margin: 0 0 14px; }
   h2 .p { color: var(--phosphor-dim); margin-right: 8px; }
-  h3 { color: var(--ink); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; margin: 26px 0 10px; }
-  p { margin: 0 0 16px; }
-  strong { color: #e6f3ea; font-weight: 600; }
-  .lead { color: #d6e6db; }
-
-  ul { margin: 0 0 16px; padding-left: 20px; }
-  li { margin: 0 0 10px; }
+  p { margin: 0 0 14px; }
+  .lead { color: #d6e6db; font-size: 16px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 0 0 9px; }
   li::marker { color: var(--phosphor-dim); }
   .verdict { color: var(--phosphor); font-weight: 600; }
-
-  pre.code {
-    background: var(--panel); border: 1px solid var(--line); border-left: 2px solid var(--phosphor-dim);
-    border-radius: 6px; padding: 14px 16px; overflow-x: auto; font-size: 13px;
-    color: var(--ink); margin: 0 0 16px;
-  }
-  pre.code .c { color: var(--muted); }
-  code { color: var(--phosphor); }
-
-  footer { border-top: 1px solid var(--line); padding: 28px 0 60px; color: var(--muted); font-size: 13px; }
+  pre.code { background: var(--panel); border: 1px solid var(--line); border-left: 2px solid var(--phosphor-dim);
+    border-radius: 6px; padding: 14px 16px; overflow-x: auto; font-size: 13px; color: var(--ink); margin: 0; }
+  footer { border-top: 1px solid var(--line); padding: 26px 0 60px; color: var(--muted); font-size: 13px; }
   footer a { color: var(--phosphor-dim); }
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header>
-<pre class="banner">
-██   ██  ██████  ██      ██████  ████████ ██████  ██    ██ ███████
-██   ██ ██    ██ ██      ██   ██    ██    ██   ██ ██    ██ ██
-███████ ██    ██ ██      ██   ██    ██    ██████  ██    ██ █████
-██   ██ ██    ██ ██      ██   ██    ██    ██   ██ ██    ██ ██
-██   ██  ██████  ███████ ██████     ██    ██   ██  ██████  ███████
-</pre>
+    <svg viewBox="0 0 660 50" role="img" aria-label="holdtrue" xmlns="http://www.w3.org/2000/svg" class="wordmark"><defs><filter id="g" x="-8%" y="-30%" width="116%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="#33ff66" filter="url(#g)"><rect x="0" y="0" width="20" height="10"/><rect x="50" y="0" width="20" height="10"/><rect x="90" y="0" width="60" height="10"/><rect x="170" y="0" width="20" height="10"/><rect x="250" y="0" width="60" height="10"/><rect x="330" y="0" width="80" height="10"/><rect x="420" y="0" width="60" height="10"/><rect x="500" y="0" width="20" height="10"/><rect x="560" y="0" width="20" height="10"/><rect x="590" y="0" width="70" height="10"/><rect x="0" y="10" width="20" height="10"/><rect x="50" y="10" width="20" height="10"/><rect x="80" y="10" width="20" height="10"/><rect x="140" y="10" width="20" height="10"/><rect x="170" y="10" width="20" height="10"/><rect x="250" y="10" width="20" height="10"/><rect x="300" y="10" width="20" height="10"/><rect x="360" y="10" width="20" height="10"/><rect x="420" y="10" width="20" height="10"/><rect x="470" y="10" width="20" height="10"/><rect x="500" y="10" width="20" height="10"/><rect x="560" y="10" width="20" height="10"/><rect x="590" y="10" width="20" height="10"/><rect x="0" y="20" width="70" height="10"/><rect x="80" y="20" width="20" height="10"/><rect x="140" y="20" width="20" height="10"/><rect x="170" y="20" width="20" height="10"/><rect x="250" y="20" width="20" height="10"/><rect x="300" y="20" width="20" height="10"/><rect x="360" y="20" width="20" height="10"/><rect x="420" y="20" width="60" height="10"/><rect x="500" y="20" width="20" height="10"/><rect x="560" y="20" width="20" height="10"/><rect x="590" y="20" width="50" height="10"/><rect x="0" y="30" width="20" height="10"/><rect x="50" y="30" width="20" height="10"/><rect x="80" y="30" width="20" height="10"/><rect x="140" y="30" width="20" height="10"/><rect x="170" y="30" width="20" height="10"/><rect x="250" y="30" width="20" height="10"/><rect x="300" y="30" width="20" height="10"/><rect x="360" y="30" width="20" height="10"/><rect x="420" y="30" width="20" height="10"/><rect x="470" y="30" width="20" height="10"/><rect x="500" y="30" width="20" height="10"/><rect x="560" y="30" width="20" height="10"/><rect x="590" y="30" width="20" height="10"/><rect x="0" y="40" width="20" height="10"/><rect x="50" y="40" width="20" height="10"/><rect x="90" y="40" width="60" height="10"/><rect x="170" y="40" width="70" height="10"/><rect x="250" y="40" width="60" height="10"/><rect x="360" y="40" width="20" height="10"/><rect x="420" y="40" width="20" height="10"/><rect x="470" y="40" width="20" height="10"/><rect x="510" y="40" width="60" height="10"/><rect x="590" y="40" width="70" height="10"/></g></svg>
     <div class="tagline">prove it. don't read it.</div>
-    <nav>
-      <a href="#what">what</a>
-      <a href="#idea">the idea</a>
-      <a href="#how">how it works</a>
-      <a href="#start">getting started</a>
-      <a href="#scope">what it proves</a>
-      <a href="https://github.com/holdtrue-dev/holdtrue">code</a>
-    </nav>
   </header>
-
   <main>
-    <section id="what">
-      <h2><span class="p">#</span>what it is</h2>
-      <p class="lead">holdtrue checks that code does what you meant by checking it against a
-      contract you wrote and approved, instead of by reading the code.</p>
-      <p>You describe what you want in plain language. holdtrue turns that into a contract:
-      type signatures, properties, and a spec a solver can check. You review the contract.
-      Then an implementation is written, and holdtrue runs the contract against it. The output
-      is not a diff. It is a report that says, for each thing you asked for, whether it is
-      proven, only sampled, or broken.</p>
-      <p>The point is to move your attention from "is this code correct?" to "does this
-      contract say what I meant?". For small, well-understood functions that is an easier
-      question. It is also the question every reviewer is really trying to answer when they
-      read a diff.</p>
+    <p class="lead">holdtrue checks code against a contract you approve, instead of by reading
+    the code. You review the contract; it tells you what is actually guaranteed.</p>
+
+    <section>
+      <h2><span class="p">#</span>how</h2>
+      <p>You write what you want in plain language. holdtrue turns it into a checkable
+      contract: types, properties, and a spec a solver can prove. You approve it. An
+      implementation is checked against the contract, and you get a verdict for each thing
+      you asked for.</p>
     </section>
 
-    <section id="idea">
-      <h2><span class="p">#</span>the idea</h2>
-      <p>Code review asks people to read an implementation and guess whether it matches
-      intent. That is slow, it misses things, and it does not scale. The guarantee you
-      actually want is that behaviour matches intent. Reading code only gives you a weak,
-      manual approximation of it.</p>
-      <p>holdtrue changes the order. Intent is written down first and turned into checks
-      before any code exists. The checks come from intent, not from an implementation, so
-      they are not quietly shaped to fit whatever the code happens to do. A human reviews and
-      owns the contract. The implementation serves the contract, not the other way around.</p>
-      <p>When holdtrue says <span class="verdict">GUARANTEED</span>, it means a solver proved
-      the implementation satisfies the contract for every input in the declared domain, and
-      that the contract is strong enough to catch injected faults. It does not mean the
-      contract matches what you meant. That part is still yours. holdtrue makes the gap
-      visible instead of hiding it.</p>
-    </section>
-
-    <section id="how">
-      <h2><span class="p">#</span>how it works</h2>
-      <p>The loop has a few steps.</p>
+    <section>
+      <h2><span class="p">#</span>verdicts</h2>
       <ul>
-        <li><strong>Intent.</strong> You write what you want in plain language. holdtrue asks
-        about the parts usually left implicit: edge cases, error behaviour, what counts as
-        valid input.</li>
-        <li><strong>Contract.</strong> The answers become a machine-checkable contract: types,
-        properties over generated inputs, and a spec the symbolic checker can prove. You read
-        and approve it. You can edit it. It is the source of truth.</li>
-        <li><strong>Implementation.</strong> Written separately, against the approved
-        contract. The contract author and the code author are kept apart, so the code cannot
-        be fitted to the contract author's private reasoning.</li>
-        <li><strong>Verification.</strong> holdtrue runs the whole contract: types, the
-        symbolic proof, property tests (including ones the implementer never saw), a probe
-        that feeds the contract deliberately broken code to check it gets rejected, and
-        mutation testing that injects faults to check the contract has teeth.</li>
-        <li><strong>Report.</strong> A verdict for each piece of intent.</li>
+        <li><span class="verdict">GUARANTEED</span>: proven over every input, and the
+        contract caught injected bugs. You do not need to read the code.</li>
+        <li><span class="verdict">UNGUARANTEED</span>: only sampled evidence. Still needs
+        human review.</li>
+        <li><span class="verdict">FAILED</span>: a concrete input breaks the contract. You
+        get that input.</li>
       </ul>
-      <h3>the three verdicts</h3>
-      <ul>
-        <li><span class="verdict">GUARANTEED</span>. Proven over the whole input domain, and
-        the contract caught injected bugs and rejected broken stand-ins. You do not need to
-        read the code.</li>
-        <li><span class="verdict">UNGUARANTEED</span>. The evidence is only sampled or partial.
-        This still needs human review, and holdtrue says so plainly rather than showing green.</li>
-        <li><span class="verdict">FAILED</span>. A concrete input breaks the contract. The
-        report gives you that input.</li>
-      </ul>
-      <p>Nothing is weakened to make a build pass. If a check can only be satisfied by
-      changing the contract, that change goes back to you for approval and is recorded.</p>
     </section>
 
-    <section id="start">
+    <section>
       <h2><span class="p">$</span>getting started</h2>
-      <p>holdtrue targets Python pure functions for now. You need Python 3.12 and
-      <a href="https://docs.astral.sh/uv/">uv</a>.</p>
+      <p>Python 3.12 and <a href="https://docs.astral.sh/uv/">uv</a>.</p>
 <pre class="code">git clone https://github.com/holdtrue-dev/holdtrue
 cd holdtrue
 uv sync
 uv run holdtrue verify examples/clamp \
   --impl examples/clamp/controls/correct.py</pre>
-      <p>That runs the full contract for a clamp function against a correct implementation.
-      You see each check, then the verdict: <span class="verdict">GUARANTEED</span>, backed by
-      a symbolic proof, mutation testing, and the negative probe.</p>
-      <p>To see the other outcomes:</p>
-<pre class="code"><span class="c"># a bug: the report hands you a counterexample</span>
-uv run holdtrue verify examples/clamp \
-  --impl examples/clamp/controls/buggy.py
-
-<span class="c"># a correct function, too-weak contract: refused a guarantee</span>
-uv run holdtrue verify examples/clamp \
-  --impl examples/clamp/controls/correct.py \
-  --manifest contract/manifest_weak.yaml</pre>
-      <p>The last one is the one to watch. The function is correct and the proof passes, but
-      holdtrue still refuses to say <span class="verdict">GUARANTEED</span>, because the
-      contract is weak enough to also accept broken code. A green check there would not mean
-      anything, so it does not give you one.</p>
     </section>
 
-    <section id="scope">
-      <h2><span class="p">#</span>what it proves, and what it doesn't</h2>
-      <p>holdtrue can prove a lot for a pure, fully typed function over a domain the checker
-      can exhaust: bounded integers, finite enums, and the like. For those it proves the
-      implementation matches the written contract for every input, confirms the contract is
-      not vacuous, and confirms it rejects broken implementations.</p>
-      <p>It cannot prove that the contract matches your intent. If you forget to specify a
-      case, the proof still passes and the report still says <span class="verdict">GUARANTEED</span>
-      for what you did specify. holdtrue lists which parts of the intent were interrogated so
-      the gaps are visible, but closing them is human judgment.</p>
-      <p>It also cannot say much about code it cannot reason over symbolically: floating point,
-      unbounded loops, time, IO, randomness. Those come back as
-      <span class="verdict">UNGUARANTEED</span>, which is an honest result, not a failure. The
-      line between "proven now" and "still needs a human" is the whole point, and the tool
-      reports it straight.</p>
-    </section>
-
-    <section id="status">
-      <h2><span class="p">#</span>status</h2>
-      <p>Early. One language, one narrow domain, proven end to end. The contract author and
-      the implementer run as separate steps today; running them as separate model contexts is
-      the next step. After that, the plan is to widen past pure functions.</p>
+    <section>
+      <h2><span class="p">#</span>scope</h2>
+      <p>Today it covers Python pure functions over domains a solver can exhaust. Anything it
+      cannot prove, like floats, loops, or IO, comes back UNGUARANTEED, said plainly. Whether
+      the contract matches what you meant is still your call.</p>
     </section>
   </main>
-
   <footer>
     <p>code: <a href="https://github.com/holdtrue-dev/holdtrue">github.com/holdtrue-dev/holdtrue</a></p>
     <p>prove it. don't read it.</p>
   </footer>
-
 </div>
 </body>
 </html>
