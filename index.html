@@ -52,17 +52,18 @@
   .js .cue { animation: bob 1.9s ease-in-out infinite; }
 
   /* what */
-  h2 { color:var(--phosphor); font-size:13px; letter-spacing:.28em; text-transform:uppercase;
-    margin:0 0 22px; font-weight:600; }
-  .lead { font-size:clamp(18px,3.6vw,27px); line-height:1.5; color:#e2efe6; margin:0; }
+  h2 { color:var(--phosphor); font-size:clamp(15px,2.5vw,19px); letter-spacing:.22em;
+    text-transform:uppercase; margin:0 0 22px; font-weight:600; }
+  #verdicts h2 { font-size:13px; letter-spacing:.24em; }
+  .lead { font-size:clamp(16px,2.8vw,21px); line-height:1.55; color:#e2efe6; margin:0; }
   .lead b { color:var(--phosphor); font-weight:600; }
 
   /* verdicts */
   .verdicts { display:flex; gap:clamp(18px,4vw,46px); flex-wrap:wrap; justify-content:center; }
   .vcard { width:190px; display:flex; flex-direction:column; align-items:center; }
   .vcard svg { width:64px; height:64px; transition:transform .25s ease, filter .25s ease; }
-  .vcard .name { margin-top:14px; font-size:14px; letter-spacing:.1em; font-weight:600; }
-  .vcard .vdesc { margin-top:8px; font-size:13px; color:var(--muted); line-height:1.45;
+  .vcard .name { margin-top:14px; font-size:17px; letter-spacing:.08em; font-weight:600; }
+  .vcard .vdesc { margin-top:9px; font-size:14.5px; color:var(--ink); line-height:1.5;
     opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .3s ease; }
   .vcard:hover svg, .vcard:focus-within svg { transform:translateY(-4px); filter:drop-shadow(0 0 12px currentColor); }
   .vcard:hover .vdesc, .vcard:focus-within .vdesc { opacity:1; max-height:120px; }
