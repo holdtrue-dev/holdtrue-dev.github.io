@@ -63,8 +63,8 @@
     filter: drop-shadow(0 0 14px rgba(51,255,102,0.42)); }
   .js .wordmark { animation: flicker 1.3s ease-in-out 1 both; }
   .tagline { margin-top:20px; letter-spacing:.24em; color:var(--phosphor); font-size:clamp(14px,2.5vw,17px); }
-  .subhead { margin:16px auto 0; max-width:34ch; font-size:clamp(15px,2.5vw,19px);
-    color:#dfeee5; line-height:1.5; }
+  .subhead { margin:16px auto 0; max-width:620px; font-size:clamp(15px,2.5vw,19px);
+    color:#dfeee5; line-height:1.55; text-wrap:balance; }
   .subhead b { color:var(--phosphor); font-weight:700; }
   .cue { position:absolute; bottom:22px; left:0; right:0; color:var(--muted); font-size:18px; }
   .js .cue { animation: bob 1.9s ease-in-out infinite; }
@@ -187,6 +187,7 @@
   .demo-out { margin-top:6px; white-space:pre-wrap; word-break:break-word; }
   .demo-out > div { opacity:0; transform:translateY(3px); transition:opacity .25s ease, transform .25s ease; }
   .demo-out > div.show { opacity:1; transform:none; }
+  .demo-out .rule { border-top:1px solid var(--line); height:0; margin:9px 0; }
   .demo-out .dim { color:var(--muted); }
   .demo-out .ok { color:var(--ok); font-weight:600; }
   .demo-out .gtd { color:var(--ground); background:var(--ok); padding:1px 9px; border-radius:4px;
@@ -249,8 +250,10 @@
       transform:translateY(-50%);
       background:repeating-linear-gradient(90deg, var(--warn) 0 7px, transparent 7px 15px); animation:none; }
     .curtain span { writing-mode:horizontal-tb; padding:1px 9px; }
-    .contract-grid { grid-template-columns:1fr; gap:6px 0; }
-    .contract-grid .ann { border-left:0; padding-left:0; margin:0 0 10px; white-space:normal; }
+    .contract-grid { display:block; padding:18px 16px; }
+    .contract-grid code { display:block; overflow-x:auto; padding-bottom:4px; }
+    .contract-grid .ann { display:block; border-left:0; padding-left:0; margin:4px 0 16px; white-space:normal; }
+    .foot { position:static; margin-top:38px; flex-wrap:wrap; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior:auto; }
@@ -273,7 +276,7 @@
     <div class="inner">
       <svg viewBox="0 0 660 50" role="img" aria-label="holdtrue" xmlns="http://www.w3.org/2000/svg" class="wordmark"><defs><filter id="g" x="-8%" y="-30%" width="116%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="#33ff66" filter="url(#g)"><rect x="0" y="0" width="20" height="10"/><rect x="50" y="0" width="20" height="10"/><rect x="90" y="0" width="60" height="10"/><rect x="170" y="0" width="20" height="10"/><rect x="250" y="0" width="60" height="10"/><rect x="330" y="0" width="80" height="10"/><rect x="420" y="0" width="60" height="10"/><rect x="500" y="0" width="20" height="10"/><rect x="560" y="0" width="20" height="10"/><rect x="590" y="0" width="70" height="10"/><rect x="0" y="10" width="20" height="10"/><rect x="50" y="10" width="20" height="10"/><rect x="80" y="10" width="20" height="10"/><rect x="140" y="10" width="20" height="10"/><rect x="170" y="10" width="20" height="10"/><rect x="250" y="10" width="20" height="10"/><rect x="300" y="10" width="20" height="10"/><rect x="360" y="10" width="20" height="10"/><rect x="420" y="10" width="20" height="10"/><rect x="470" y="10" width="20" height="10"/><rect x="500" y="10" width="20" height="10"/><rect x="560" y="10" width="20" height="10"/><rect x="590" y="10" width="20" height="10"/><rect x="0" y="20" width="70" height="10"/><rect x="80" y="20" width="20" height="10"/><rect x="140" y="20" width="20" height="10"/><rect x="170" y="20" width="20" height="10"/><rect x="250" y="20" width="20" height="10"/><rect x="300" y="20" width="20" height="10"/><rect x="360" y="20" width="20" height="10"/><rect x="420" y="20" width="60" height="10"/><rect x="500" y="20" width="20" height="10"/><rect x="560" y="20" width="20" height="10"/><rect x="590" y="20" width="50" height="10"/><rect x="0" y="30" width="20" height="10"/><rect x="50" y="30" width="20" height="10"/><rect x="80" y="30" width="20" height="10"/><rect x="140" y="30" width="20" height="10"/><rect x="170" y="30" width="20" height="10"/><rect x="250" y="30" width="20" height="10"/><rect x="300" y="30" width="20" height="10"/><rect x="360" y="30" width="20" height="10"/><rect x="420" y="30" width="20" height="10"/><rect x="470" y="30" width="20" height="10"/><rect x="500" y="30" width="20" height="10"/><rect x="560" y="30" width="20" height="10"/><rect x="590" y="30" width="20" height="10"/><rect x="0" y="40" width="20" height="10"/><rect x="50" y="40" width="20" height="10"/><rect x="90" y="40" width="60" height="10"/><rect x="170" y="40" width="70" height="10"/><rect x="250" y="40" width="60" height="10"/><rect x="360" y="40" width="20" height="10"/><rect x="420" y="40" width="20" height="10"/><rect x="470" y="40" width="20" height="10"/><rect x="510" y="40" width="60" height="10"/><rect x="590" y="40" width="70" height="10"/></g></svg>
       <div class="tagline">prove it. don't read it.</div>
-      <p class="subhead">You approve a contract. holdtrue <b>proves</b> the code keeps it, over every input.</p>
+      <p class="subhead">AI writes the code.<br>You approve a contract. holdtrue <b>proves</b> it holds.</p>
       <div class="term" id="term" aria-label="a holdtrue verification run">
         <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">holdtrue</span></div>
         <div class="term-body">
@@ -355,7 +358,7 @@
         <div class="md-h"># intent: clamp</div>
         <p class="md-p">Clamp a number into a range. Given <code>x</code>, <code>lo</code>, <code>hi</code>, return <code>x</code> if it sits inside <code>[lo, hi]</code>, otherwise return the nearest bound.</p>
       </div>
-      <p class="intent-note">You write this. <b>context A</b> turns it into the contract you approve.</p>
+      <p class="intent-note">You write this. <b>the rest is proof.</b></p>
     </div>
   </section>
 
@@ -383,7 +386,7 @@
   <section class="panel" id="verdicts">
     <div class="inner">
       <h2>the verdict</h2>
-      <p class="kicker">three outcomes, always with evidence</p>
+      <p class="kicker">no answer without evidence</p>
       <div class="verdicts">
         <div class="vcard v-ok">
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><polyline points="20,33 28,42 45,22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -404,10 +407,27 @@
     </div>
   </section>
 
+  <section class="panel" id="start">
+    <div class="inner">
+      <h2>getting started</h2>
+      <p class="kicker">clone, sync, verify</p>
+      <div class="cmdwrap">
+        <button class="copy" type="button" aria-label="copy commands">copy</button>
+<pre class="cmd" id="cmd"><span class="cm"># 1. clone and install (uv pins the whole toolchain)</span>
+git clone https://github.com/holdtrue-dev/holdtrue
+cd holdtrue && uv sync
+
+<span class="cm"># 2. verify a correct implementation against its contract</span>
+uv run python -m holdtrue.cli verify examples/clamp \
+              --impl examples/clamp/controls/correct.py</pre>
+      </div>
+    </div>
+  </section>
+
   <section class="panel" id="demo">
     <div class="inner">
       <h2>see it run</h2>
-      <p class="kicker">one command, real output</p>
+      <p class="kicker">a real verification, start to finish</p>
       <div class="demo-term" id="demo-term">
         <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">holdtrue verify</span></div>
         <div class="demo-body">
@@ -419,21 +439,11 @@
     </div>
   </section>
 
-  <section class="panel" id="start">
+  <section class="panel" id="powered">
     <div class="inner">
-      <h2>getting started</h2>
-      <div class="cmdwrap">
-        <button class="copy" type="button" aria-label="copy commands">copy</button>
-<pre class="cmd" id="cmd"><span class="cm"># 1. clone and install (uv pins the whole toolchain)</span>
-git clone https://github.com/holdtrue-dev/holdtrue
-cd holdtrue && uv sync
-
-<span class="cm"># 2. verify a correct implementation against its contract</span>
-uv run python -m holdtrue.cli verify examples/clamp \
-              --impl examples/clamp/controls/correct.py</pre>
-      </div>
+      <h2>powered by</h2>
+      <p class="kicker">the toolchain it stands on</p>
       <div class="pwr">
-        <span class="pwr-eyebrow">powered by</span>
         <div class="pwr-row">
           <a class="logo" href="https://github.com/life4/deal" target="_blank" rel="noopener" aria-label="deal: contracts">
             <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="28" cy="28" r="17"/><polyline points="18,29 25,36 39,18"/></svg>
@@ -523,7 +533,7 @@ uv run python -m holdtrue.cli verify examples/clamp \
 
   (function demo(){
     var CMD = "holdtrue verify examples/clamp --impl examples/clamp/controls/correct.py";
-    var RULE = '<span class="dim">' + Array(49).join("─") + '</span>';
+    var RULE = "::rule::";
     var LINES = [
       '<span class="dim">holdtrue verify</span>  INT-001  <span class="dim">impl=</span>correct.py  <span class="dim">sandbox=</span>bwrap',
       RULE,
@@ -548,7 +558,9 @@ uv run python -m holdtrue.cli verify examples/clamp \
     function render(){
       clearAll(); outEl.innerHTML = ""; typeEl.textContent = "";
       var nodes = LINES.map(function(html){
-        var d = document.createElement("div"); d.innerHTML = html; outEl.appendChild(d); return d;
+        var d = document.createElement("div");
+        if (html === RULE) d.className = "rule"; else d.innerHTML = html;
+        outEl.appendChild(d); return d;
       });
       if (reduce) { typeEl.textContent = CMD; nodes.forEach(function(n){ n.classList.add("show"); }); cur.style.display = "none"; return; }
       cur.style.display = "inline-block";
