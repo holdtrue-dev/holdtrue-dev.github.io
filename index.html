@@ -98,6 +98,13 @@
 
   /* the journey */
   #journey .inner { max-width:1220px; }
+  .foundation { margin:22px auto 0; max-width:980px; border-top:1px solid var(--line); padding-top:18px; }
+  .found-label { display:block; color:var(--muted); font-size:12.5px; letter-spacing:.1em; margin-bottom:14px; }
+  .found-row { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .chip { font-size:13px; letter-spacing:.04em; color:var(--ctx); border:1px solid #1f4a44;
+    border-radius:20px; padding:5px 14px; background:rgba(43,214,192,.05); }
+  .chip.api { color:#9fd0ff; border-color:#26415a; background:rgba(120,170,220,.05); }
+  .chip.any { color:var(--muted); border-style:dashed; border-color:#2c4a3b; background:none; }
   .track { display:flex; align-items:stretch; justify-content:center; gap:6px;
     overflow-x:auto; padding:6px 2px 16px; scrollbar-width:none; }
   .track::-webkit-scrollbar { display:none; }
@@ -345,6 +352,19 @@
           <span class="stitle">the verdict</span>
           <span class="sdesc">guaranteed, unguaranteed, or failed. with evidence.</span>
           <span class="tag you">you</span>
+        </div>
+      </div>
+      <div class="foundation">
+        <span class="found-label">the two AI contexts run on an assistant you choose</span>
+        <div class="found-row">
+          <span class="chip">claude</span>
+          <span class="chip">aider</span>
+          <span class="chip">gemini</span>
+          <span class="chip">codex</span>
+          <span class="chip api">Anthropic</span>
+          <span class="chip api">OpenAI</span>
+          <span class="chip api">Ollama</span>
+          <span class="chip any">+ your own</span>
         </div>
       </div>
     </div>
