@@ -186,10 +186,23 @@ uv run python -m holdtrue.cli verify examples/clamp \
   </section>
 
 <script>
+  var panels = Array.prototype.slice.call(document.querySelectorAll(".panel"));
   var io = new IntersectionObserver(function(es){
     es.forEach(function(e){ if (e.isIntersecting) e.target.classList.add("in"); });
   }, { threshold: 0.35 });
-  document.querySelectorAll(".panel").forEach(function(p){ io.observe(p); });
+  panels.forEach(function(p){ io.observe(p); });
+
+  // Arrow keys (and PageUp/PageDown) step between the snap panels.
+  document.addEventListener("keydown", function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var dir = (e.key === "ArrowDown" || e.key === "PageDown") ? 1
+            : (e.key === "ArrowUp"   || e.key === "PageUp")   ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    var cur = Math.round(window.scrollY / window.innerHeight);
+    var next = Math.max(0, Math.min(panels.length - 1, cur + dir));
+    panels[next].scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   var btn = document.querySelector(".copy");
   if (btn && navigator.clipboard) {
