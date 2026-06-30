@@ -65,6 +65,7 @@
   .tagline { margin-top:20px; letter-spacing:.24em; color:var(--phosphor); font-size:clamp(14px,2.5vw,17px); }
   .subhead { margin:16px auto 0; max-width:620px; font-size:clamp(15px,2.5vw,19px);
     color:#dfeee5; line-height:1.55; text-wrap:balance; }
+  .subhead .s { white-space:nowrap; }   /* never break a sentence mid-line */
   .subhead b { color:var(--phosphor); font-weight:700; }
   .cue { position:absolute; bottom:22px; left:0; right:0; color:var(--muted); font-size:18px; }
   .js .cue { animation: bob 1.9s ease-in-out infinite; }
@@ -156,9 +157,8 @@
   .intent-card .md-p { margin:0; color:#cfe0d4; font-size:clamp(15px,2.2vw,16.5px); line-height:1.7; }
   .intent-card code { color:var(--phosphor); background:rgba(51,255,102,.09); padding:1px 6px;
     border-radius:4px; font-size:.9em; }
-  .botnote { margin-top:22px; font-size:14px; color:var(--muted); }
+  .botnote { margin-top:26px; font-size:clamp(16px,2.6vw,20px); color:var(--muted); }
   .botnote b { color:var(--ctx); font-weight:600; }
-  .botnote.lg { font-size:clamp(16px,2.6vw,20px); margin-top:26px; }
 
   /* the contract */
   #contract .inner { max-width:1040px; }
@@ -304,7 +304,7 @@
 
   <section class="panel" id="pitch">
     <div class="inner">
-      <p class="subhead">You approve a contract. AI writes the code. holdtrue <b>proves</b> it holds.</p>
+      <p class="subhead"><span class="s">AI writes the code.</span> <span class="s">You read the contract.</span> <span class="s">holdtrue <b>proves</b> they agree.</span></p>
       <div class="term" id="term" aria-label="a holdtrue verification run">
         <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">holdtrue</span></div>
         <div class="term-body">
@@ -360,7 +360,7 @@
         <div class="md-h"># intent: clamp</div>
         <p class="md-p">Clamp a number into a range. Given <code>x</code>, <code>lo</code>, <code>hi</code>, return <code>x</code> if it sits inside <code>[lo, hi]</code>, otherwise return the nearest bound.</p>
       </div>
-      <p class="botnote lg">You write this. <b>the rest is proof.</b></p>
+      <p class="botnote">You write this. <b>the rest is proof.</b></p>
     </div>
   </section>
 
