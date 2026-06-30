@@ -177,19 +177,22 @@
     transition-delay:calc(var(--i,0)*.12s); }
 
   /* verdict */
-  .verdicts { display:flex; gap:clamp(16px,3.4vw,40px); flex-wrap:wrap; justify-content:center; }
+  #verdicts .inner { max-width:1000px; }
+  .verdicts { display:flex; gap:clamp(14px,2.8vw,32px); flex-wrap:wrap; justify-content:center; }
   .vcard { width:212px; border:1px solid var(--line); border-radius:14px; padding:24px 18px;
     background:rgba(10,16,10,.5); display:flex; flex-direction:column; align-items:center; gap:13px; }
   .vcard svg { width:64px; height:64px; }
   .vcard .name { font-size:13px; letter-spacing:.07em; font-weight:700; color:var(--ink); }
   .vcard .vdesc { font-size:13.5px; color:var(--muted); line-height:1.5; margin:0; }
-  .v-ok { color:var(--ok); } .v-warn { color:var(--warn); } .v-bad { color:var(--bad); }
+  .v-ok { color:var(--ok); } .v-enf { color:#2bd6c0; } .v-warn { color:var(--warn); } .v-bad { color:var(--bad); }
   .js .panel.in .vcard { animation: vwave 3.8s ease-in-out infinite; }
-  .js .panel.in .vcard:nth-child(2) { animation-delay:1.27s; }
-  .js .panel.in .vcard:nth-child(3) { animation-delay:2.53s; }
+  .js .panel.in .vcard:nth-child(2) { animation-delay:.95s; }
+  .js .panel.in .vcard:nth-child(3) { animation-delay:1.9s; }
+  .js .panel.in .vcard:nth-child(4) { animation-delay:2.85s; }
   .js .panel.in .vcard svg { animation: vfloat 3.8s ease-in-out infinite; }
-  .js .panel.in .vcard:nth-child(2) svg { animation-delay:1.27s; }
-  .js .panel.in .vcard:nth-child(3) svg { animation-delay:2.53s; }
+  .js .panel.in .vcard:nth-child(2) svg { animation-delay:.95s; }
+  .js .panel.in .vcard:nth-child(3) svg { animation-delay:1.9s; }
+  .js .panel.in .vcard:nth-child(4) svg { animation-delay:2.85s; }
 
   /* demo */
   #demo .inner { max-width:780px; }
@@ -427,6 +430,11 @@
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><polyline points="20,33 28,42 45,22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <div class="name">GUARANTEED</div>
           <p class="vdesc">proven over all inputs, and the contract catches injected bugs and rejects broken stand-ins.</p>
+        </div>
+        <div class="vcard v-enf">
+          <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><rect x="22" y="31" width="20" height="15" rx="2.5" stroke-width="3"/><path d="M26 31v-4a6 6 0 0 1 12 0v4" stroke-width="3"/></svg>
+          <div class="name">ENFORCED</div>
+          <p class="vdesc">checked at runtime on every call and clean over every sample, but not proven over all inputs.</p>
         </div>
         <div class="vcard v-warn">
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><circle cx="29" cy="29" r="11" stroke-width="3.5"/><line x1="37" y1="37" x2="46" y2="46" stroke-width="3.5" stroke-linecap="round"/></svg>
