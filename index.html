@@ -30,13 +30,11 @@
       linear-gradient(90deg, rgba(51,255,102,0.026) 1px, transparent 1px);
     background-size: 100% 100%, 46px 46px, 46px 46px;
     background-attachment: fixed; }
-  /* static scanlines, on top of everything, very faint */
   body::before { content:""; position:fixed; inset:0; pointer-events:none; z-index:6;
     background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px); opacity:.45; }
   a { color:var(--phosphor); text-decoration:none; }
   a:focus-visible, button:focus-visible { outline:2px solid var(--phosphor); outline-offset:3px; }
 
-  /* drifting proof glyphs (behind content) */
   .glyphs { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   .glyphs b { position:absolute; font-weight:400; color:rgba(51,255,102,0.06);
     font-size:clamp(48px,7vw,108px); user-select:none; }
@@ -49,7 +47,6 @@
   .glyphs b:nth-child(6){ top:86%; left:38%; animation-delay:-30s; }
   .glyphs b:nth-child(7){ top:8%;  left:54%; animation-delay:-9s;  color:rgba(43,214,192,0.05); }
 
-  /* slow CRT refresh sweep */
   .sweep { position:fixed; left:0; right:0; top:0; height:200px; z-index:1; pointer-events:none;
     background:linear-gradient(180deg, transparent, rgba(51,255,102,0.05) 50%, transparent); }
   .js .sweep { animation: sweep 9s linear infinite; }
@@ -69,7 +66,6 @@
   .cue { position:absolute; bottom:22px; left:0; right:0; color:var(--muted); font-size:18px; }
   .js .cue { animation: bob 1.9s ease-in-out infinite; }
 
-  /* self-playing terminal */
   .term { max-width:520px; margin:34px auto 0; text-align:left; overflow:hidden;
     border:1px solid var(--line); border-radius:10px; background:#0a0f0a;
     box-shadow:0 0 40px rgba(51,255,102,.1); }
@@ -78,10 +74,10 @@
   .term-bar .term-title { margin-left:8px; font-size:11px; color:var(--muted); letter-spacing:.12em; }
   .term-body { padding:16px 18px 18px; font-size:14px; line-height:1.85; }
   .term .cmd { color:var(--ink); }
-  .term .prompt { color:var(--phosphor); }
-  .term .cursor { display:inline-block; width:8px; height:15px; background:var(--phosphor);
+  .prompt { color:var(--phosphor); }
+  .cursor { display:inline-block; width:8px; height:15px; background:var(--phosphor);
     vertical-align:-2px; margin-left:3px; }
-  .js .term .cursor { animation: blink 1s steps(1) infinite; }
+  .js .cursor { animation: blink 1s steps(1) infinite; }
   .term .ln { display:flex; justify-content:space-between; gap:18px; color:var(--muted); }
   .term .ln .ok { color:var(--ok); }
   .term .stamp { margin-top:14px; display:inline-block; border:1px solid var(--ok); color:var(--ok);
@@ -91,13 +87,18 @@
     transition:opacity .35s ease, transform .35s ease; }
   .js .term .ln.show, .js .term .stamp.show { opacity:1; transform:none; }
 
-  /* section heads */
+  /* section heads + statements */
   h2 { color:var(--phosphor); font-size:clamp(16px,2.6vw,20px); letter-spacing:.24em;
     text-transform:uppercase; margin:0 0 14px; font-weight:600; }
   .kicker { color:var(--muted); font-size:12.5px; letter-spacing:.16em; text-transform:uppercase;
     margin:0 0 30px; }
-  .lead { font-size:clamp(17px,3vw,23px); line-height:1.55; color:#e2efe6; margin:0; }
-  .lead b { color:var(--phosphor); font-weight:600; }
+  .say { font-size:clamp(22px,4.6vw,40px); line-height:1.4; color:#e2efe6; margin:0; font-weight:500;
+    max-width:26ch; margin-inline:auto; }
+  #say2 .say { max-width:16ch; }
+  .say .pre { color:var(--phosphor); margin-right:.4em; }
+  .say b { color:var(--phosphor); font-weight:700; }
+  .say em { color:var(--phosphor); font-style:italic; text-decoration:underline;
+    text-decoration-thickness:2px; text-underline-offset:5px; }
 
   /* the journey */
   #journey .inner { max-width:1180px; }
@@ -112,16 +113,14 @@
   .stop .num { font-size:11px; letter-spacing:.2em; color:var(--muted); }
   .stop .sicon { width:27px; height:27px; color:var(--phosphor); }
   .stop .sicon svg { width:100%; height:100%; }
+  .stop.ctx .sicon { color:var(--ctx); }
   .stop .stitle { font-size:15px; color:var(--ink); font-weight:600; letter-spacing:.02em; }
   .stop .sdesc { font-size:12.5px; color:var(--muted); line-height:1.5; }
   .stop .tag { margin-top:auto; font-size:10px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--phosphor-dim); border:1px solid var(--line); border-radius:20px;
-    padding:3px 10px; align-self:flex-start; }
-  .stop.you { border-color:rgba(51,255,102,.5); box-shadow:0 0 22px rgba(51,255,102,.1); }
-  .stop.you .tag { color:var(--ground); background:var(--phosphor); border-color:var(--phosphor); font-weight:700; }
-  .stop.ai { border-style:dashed; border-color:#26483a; }
-  .stop.ai .sicon { color:var(--ctx); }
-  .stop.ai .tag { color:var(--ctx); border-color:#1f4a44; }
+    border:1px solid var(--line); border-radius:20px; padding:3px 10px; align-self:flex-start;
+    color:var(--phosphor-dim); }
+  .stop .tag.you { color:var(--ground); background:var(--phosphor); border-color:var(--phosphor); font-weight:700; }
+  .stop .tag.ctx { color:var(--ctx); border-color:#1f4a44; }
   .arrow { align-self:center; color:#2c4a3b; font-size:22px; flex:0 0 auto; line-height:1; }
   .curtain { flex:0 0 auto; align-self:stretch; width:0; border-left:2px dashed var(--warn);
     margin:8px 12px; position:relative; }
@@ -130,38 +129,73 @@
     letter-spacing:.34em; text-transform:uppercase; opacity:.95;
     text-shadow:0 0 10px rgba(243,197,78,.35); }
 
-  /* contract snippet */
-  #contract .inner { max-width:780px; }
-  .contract-card { text-align:left; border:1px solid var(--line); border-left:2px solid var(--phosphor-dim);
-    border-radius:10px; background:var(--panel); padding:20px 22px; box-shadow:0 0 32px rgba(51,255,102,.07); }
-  .contract-card pre { margin:0; font-size:clamp(12px,1.7vw,14px); line-height:1.95;
-    overflow-x:auto; color:var(--ink); white-space:pre; }
-  .contract-card .dec { color:var(--phosphor); }
-  .contract-card .kw { color:#7fd6a0; }
-  .contract-card .cm { color:var(--muted); }
-  .contract-note { margin-top:20px; font-size:14.5px; color:var(--muted); line-height:1.6; text-align:left; }
-  .contract-note b { color:var(--phosphor); font-weight:600; }
+  /* contract */
+  #contract .inner { max-width:920px; }
+  .contract-grid { display:grid; grid-template-columns:max-content 1fr; gap:14px 26px;
+    align-items:center; text-align:left; border:1px solid var(--line);
+    border-left:2px solid var(--phosphor-dim); border-radius:10px; background:var(--panel);
+    padding:24px 26px; box-shadow:0 0 32px rgba(51,255,102,.07); overflow-x:auto; }
+  .contract-grid code { font-size:clamp(11.5px,1.6vw,13.5px); white-space:pre; color:var(--phosphor); }
+  .contract-grid code .kw { color:#7fd6a0; } .contract-grid code .cm { color:var(--muted); }
+  .contract-grid .ann { font-size:12.5px; color:var(--muted); line-height:1.5;
+    border-left:1px solid var(--line); padding-left:16px; }
+  .contract-grid .ann b { color:var(--ink); font-weight:600; }
 
-  /* verdicts */
-  .verdicts { display:flex; gap:clamp(18px,4vw,50px); flex-wrap:wrap; justify-content:center; }
-  .vcard { width:200px; display:flex; flex-direction:column; align-items:center; }
-  .vcard svg { width:70px; height:70px; transition:transform .25s ease, filter .25s ease; }
-  .vcard .name { margin-top:15px; font-size:17px; letter-spacing:.08em; font-weight:600; color:var(--ink); }
-  .vcard .vdesc { margin-top:9px; font-size:14.5px; color:var(--ink); line-height:1.5;
-    opacity:0; max-height:0; overflow:hidden; transition:opacity .3s ease, max-height .3s ease; }
-  .vcard:hover svg, .vcard:focus-within svg { transform:translateY(-4px); filter:drop-shadow(0 0 12px currentColor); }
-  .vcard:hover .vdesc, .vcard:focus-within .vdesc { opacity:1; max-height:120px; }
+  /* verdict */
+  .verdicts { display:flex; gap:clamp(16px,3.4vw,40px); flex-wrap:wrap; justify-content:center; }
+  .vcard { width:212px; border:1px solid var(--line); border-radius:14px; padding:24px 18px;
+    background:rgba(10,16,10,.5); display:flex; flex-direction:column; align-items:center; gap:13px; }
+  .vcard svg { width:64px; height:64px; }
+  .vcard .name { font-size:16px; letter-spacing:.1em; font-weight:700; color:var(--ink); }
+  .vcard .vdesc { font-size:13.5px; color:var(--muted); line-height:1.5; margin:0; }
   .v-ok { color:var(--ok); } .v-warn { color:var(--warn); } .v-bad { color:var(--bad); }
+  .js .panel.in .vcard { animation: vwave 3.8s ease-in-out infinite; }
+  .js .panel.in .vcard:nth-child(2) { animation-delay:1.27s; }
+  .js .panel.in .vcard:nth-child(3) { animation-delay:2.53s; }
+  .js .panel.in .vcard svg { animation: vfloat 3.8s ease-in-out infinite; }
+  .js .panel.in .vcard:nth-child(2) svg { animation-delay:1.27s; }
+  .js .panel.in .vcard:nth-child(3) svg { animation-delay:2.53s; }
 
-  /* getting started */
-  .cmdwrap { position:relative; text-align:left; max-width:620px; margin:0 auto; }
+  /* demo */
+  #demo .inner { max-width:780px; }
+  .demo-term { width:100%; margin:6px auto 0; text-align:left; overflow:hidden;
+    border:1px solid var(--line); border-radius:10px; background:#0a0f0a;
+    box-shadow:0 0 44px rgba(51,255,102,.12); }
+  .demo-body { padding:16px 18px 18px; font-size:clamp(11px,1.65vw,13px); line-height:1.7; min-height:312px; }
+  .demo-cmd { color:var(--ink); }
+  .demo-out { margin-top:6px; white-space:pre-wrap; word-break:break-word; }
+  .demo-out > div { opacity:0; transform:translateY(3px); transition:opacity .25s ease, transform .25s ease; }
+  .demo-out > div.show { opacity:1; transform:none; }
+  .demo-out .dim { color:var(--muted); }
+  .demo-out .ok { color:var(--ok); font-weight:600; }
+  .demo-out .gtd { color:var(--ground); background:var(--ok); padding:1px 9px; border-radius:4px;
+    font-weight:700; letter-spacing:.12em; box-shadow:0 0 16px rgba(51,255,102,.45); }
+  .dcursor { display:inline-block; width:8px; height:14px; background:var(--phosphor);
+    vertical-align:-2px; margin-left:2px; }
+  .js .dcursor { animation: blink 1s steps(1) infinite; }
+  .replay { margin-top:18px; background:#0a0f0a; color:var(--phosphor-dim); border:1px solid var(--line);
+    border-radius:6px; padding:7px 17px; font:inherit; font-size:12px; letter-spacing:.1em; cursor:pointer; }
+  .replay:hover { color:var(--phosphor); border-color:var(--phosphor-dim); }
+
+  /* getting started + powered by */
+  .cmdwrap { position:relative; text-align:left; max-width:640px; margin:0 auto; }
   pre.cmd { background:var(--panel); border:1px solid var(--line); border-left:2px solid var(--phosphor-dim);
-    border-radius:8px; padding:18px; overflow-x:auto; font-size:13px; color:var(--ink); margin:0; }
+    border-radius:8px; padding:18px 20px; overflow-x:auto; font-size:13px; color:var(--ink); margin:0; line-height:1.75; }
+  pre.cmd .cm { color:var(--muted); }
   .copy { position:absolute; top:10px; right:10px; background:#0a0f0a; color:var(--phosphor-dim);
     border:1px solid var(--line); border-radius:5px; padding:4px 9px; font:inherit; font-size:11px;
     letter-spacing:.08em; cursor:pointer; }
   .copy:hover { color:var(--phosphor); border-color:var(--phosphor-dim); }
-  .powered { width:min(860px,94%); height:auto; display:block; margin:34px auto 0; }
+  .pwr { margin-top:46px; }
+  .pwr-eyebrow { display:block; font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--phosphor-dim); margin-bottom:22px; }
+  .pwr-row { display:flex; flex-wrap:wrap; gap:clamp(22px,5vw,56px); justify-content:center; }
+  .logo { display:flex; flex-direction:column; align-items:center; gap:7px; color:var(--phosphor);
+    transition:transform .2s ease, filter .2s ease; }
+  .logo svg { width:46px; height:46px; }
+  .logo .lname { color:var(--ink); font-size:13.5px; font-weight:600; }
+  .logo .ltag { color:var(--muted); font-size:11.5px; }
+  .logo:hover { transform:translateY(-4px); filter:drop-shadow(0 0 10px rgba(51,255,102,.5)); }
 
   /* footer */
   .foot { position:absolute; bottom:30px; left:0; right:0; display:flex; gap:24px; justify-content:center; }
@@ -174,22 +208,27 @@
   @keyframes flicker { 0%{opacity:0;}8%{opacity:.7;}12%{opacity:.2;}22%{opacity:1;}26%{opacity:.5;}34%{opacity:1;} }
   @keyframes drift { 0%,100%{transform:translate(0,0);} 50%{transform:translate(16px,-26px);} }
   @keyframes sweep { 0%{transform:translateY(-240px);} 100%{transform:translateY(100vh);} }
+  @keyframes vwave { 0%,18%,100%{ box-shadow:0 0 0 rgba(0,0,0,0); border-color:var(--line); }
+    9%{ box-shadow:0 0 28px -6px currentColor; border-color:currentColor; } }
+  @keyframes vfloat { 0%,18%,100%{ transform:translateY(0); filter:none; }
+    9%{ transform:translateY(-6px); filter:drop-shadow(0 0 12px currentColor); } }
 
   @media (max-width: 880px) {
     .track { flex-direction:column; align-items:center; overflow-x:visible; }
     .stop { flex:0 0 auto; width:min(380px,92%); }
     .arrow { transform:rotate(90deg); }
-    .curtain { width:min(380px,92%); height:0; border-left:0; border-top:2px dashed var(--warn);
-      margin:12px 0; }
+    .curtain { width:min(380px,92%); height:0; border-left:0; border-top:2px dashed var(--warn); margin:12px 0; }
     .curtain span { writing-mode:horizontal-tb; position:static; transform:none; display:block;
       text-align:center; padding-top:6px; }
+    .contract-grid { grid-template-columns:1fr; gap:6px 0; }
+    .contract-grid .ann { border-left:0; padding-left:0; margin:0 0 10px; }
   }
-  @media (hover: none) { .vcard .vdesc { opacity:1; max-height:120px; } }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior:auto; }
     .js .inner, .js .stop { opacity:1; transform:none; transition:none; }
-    .js .wordmark, .js .cue, .js .term .cursor, .js .glyphs b, .js .sweep { animation:none; }
-    .js .term .ln, .js .term .stamp { opacity:1; transform:none; }
+    .js .wordmark, .js .cue, .js .cursor, .js .glyphs b, .js .sweep,
+    .js .panel.in .vcard, .js .panel.in .vcard svg, .js .dcursor { animation:none; }
+    .js .term .ln, .js .term .stamp, .js .demo-out > div { opacity:1; transform:none; }
   }
 </style>
 </head>
@@ -221,11 +260,15 @@
     <div class="cue" aria-hidden="true">&#9662;</div>
   </section>
 
-  <section class="panel" id="what">
+  <section class="panel" id="say1">
     <div class="inner">
-      <h2>what it is</h2>
-      <p class="lead">holdtrue checks an implementation against a contract you approve, then
-      tells you what is actually <b>guaranteed</b>. You review the contract, not the code.</p>
+      <p class="say"><span class="pre" aria-hidden="true">&gt;</span>holdtrue checks an implementation against a contract you approve, then tells you what is actually <b>guaranteed</b>.</p>
+    </div>
+  </section>
+
+  <section class="panel" id="say2">
+    <div class="inner">
+      <p class="say"><span class="pre" aria-hidden="true">&gt;</span>You review the contract, <em>not</em> the code.</p>
     </div>
   </section>
 
@@ -234,52 +277,52 @@
       <h2>how it works</h2>
       <p class="kicker">one intent, end to end</p>
       <div class="track">
-        <div class="stop you" style="--i:0">
+        <div class="stop" style="--i:0">
           <span class="num">01</span>
           <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.4c.6.6 1 1.2 1 2.1h6c0-.9.4-1.5 1-2.1A6 6 0 0 0 12 3z"/></svg></span>
           <span class="stitle">intent</span>
           <span class="sdesc">what the code should do.</span>
-          <span class="tag">you</span>
+          <span class="tag you">you</span>
         </div>
         <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop ai" style="--i:1">
+        <div class="stop ctx" style="--i:1">
           <span class="num">02</span>
           <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5a2 2 0 0 1 3 3L8 19l-4 1z"/><path d="M14 7l3 3"/></svg></span>
           <span class="stitle">contract author</span>
-          <span class="sdesc">a separate AI context drafts the contract.</span>
-          <span class="tag">ai &middot; context A</span>
+          <span class="sdesc">drafts the contract from your intent.</span>
+          <span class="tag ctx">ai &middot; context A</span>
         </div>
         <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop you" style="--i:2">
+        <div class="stop" style="--i:2">
           <span class="num">03</span>
           <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 12.5l2 2 4.5-4.5"/></svg></span>
           <span class="stitle">the contract</span>
-          <span class="sdesc">you review and approve. not the code.</span>
-          <span class="tag">you approve</span>
+          <span class="sdesc">you read it and approve. this, not the code.</span>
+          <span class="tag you">you</span>
         </div>
         <div class="curtain" aria-hidden="true"><span>the curtain</span></div>
-        <div class="stop ai" style="--i:3">
+        <div class="stop ctx" style="--i:3">
           <span class="num">04</span>
           <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg></span>
           <span class="stitle">implementer</span>
-          <span class="sdesc">a second AI context. the contract only.</span>
-          <span class="tag">ai &middot; context B</span>
+          <span class="sdesc">writes the code from the contract alone.</span>
+          <span class="tag ctx">ai &middot; context B</span>
         </div>
         <span class="arrow" aria-hidden="true">&#8250;</span>
         <div class="stop" style="--i:4">
           <span class="num">05</span>
           <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
           <span class="stitle">verify</span>
-          <span class="sdesc">sandboxed: types, proof, properties, probe, mutation.</span>
+          <span class="sdesc">sandboxed checks: types, proof, properties, probe, mutation.</span>
           <span class="tag">holdtrue</span>
         </div>
         <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop you" style="--i:5">
+        <div class="stop" style="--i:5">
           <span class="num">06</span>
           <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12l2.2 2.2L16 9"/></svg></span>
           <span class="stitle">the verdict</span>
           <span class="sdesc">guaranteed, unguaranteed, or failed. with evidence.</span>
-          <span class="tag">you</span>
+          <span class="tag you">you</span>
         </div>
       </div>
     </div>
@@ -287,40 +330,58 @@
 
   <section class="panel" id="contract">
     <div class="inner">
-      <h2>the contract you approve</h2>
-      <div class="contract-card">
-<pre><span class="dec">@deal.pre(lambda x, lo, hi: lo &lt;= hi)</span>
-<span class="dec">@deal.ensure(lambda x, lo, hi, result: lo &lt;= result &lt;= hi)</span>
-<span class="dec">@deal.ensure(lambda x, lo, hi, result: result == min(max(x, lo), hi))</span>
-<span class="dec">@deal.raises()</span>
-<span class="kw">def</span> clamp(x: int, lo: int, hi: int) -&gt; int: <span class="cm">...</span></pre>
+      <h2>the contract</h2>
+      <p class="kicker">every line, in plain words</p>
+      <div class="contract-grid">
+        <code>@deal.pre(lambda x, lo, hi: lo &lt;= hi)</code>
+        <div class="ann"><b>precondition.</b> you only promise behaviour for a valid range.</div>
+        <code>@deal.ensure(lambda x, lo, hi, result: lo &lt;= result &lt;= hi)</code>
+        <div class="ann"><b>in range.</b> the result always lands inside [lo, hi].</div>
+        <code>@deal.ensure(lambda x, lo, hi, result: result == min(max(x, lo), hi))</code>
+        <div class="ann"><b>exact value.</b> and it equals the clamped number, not just any in-range one.</div>
+        <code>@deal.raises()</code>
+        <div class="ann"><b>no surprises.</b> it raises nothing.</div>
+        <code><span class="kw">def</span> clamp(x: int, lo: int, hi: int) -&gt; int: <span class="cm">...</span></code>
+        <div class="ann"><b>signature.</b> the name and types it must match.</div>
       </div>
-      <p class="contract-note">This is the whole review surface. CrossHair proves these lines over <b>all</b> integer
-      inputs, not a sample. The implementer never sees your intent, your held-out tests, or the reference oracle:
-      <b>only this</b>.</p>
     </div>
   </section>
 
   <section class="panel" id="verdicts">
     <div class="inner">
-      <h2>the verdict, per intent</h2>
+      <h2>the verdict</h2>
       <div class="verdicts">
-        <div class="vcard v-ok" tabindex="0">
+        <div class="vcard v-ok">
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><polyline points="20,33 28,42 45,22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <div class="name">GUARANTEED</div>
-          <div class="vdesc">proven over all inputs, and the contract catches injected bugs and rejects broken stand-ins.</div>
+          <p class="vdesc">proven over all inputs, and the contract catches injected bugs and rejects broken stand-ins.</p>
         </div>
-        <div class="vcard v-warn" tabindex="0">
+        <div class="vcard v-warn">
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><circle cx="29" cy="29" r="11" stroke-width="3.5"/><line x1="37" y1="37" x2="46" y2="46" stroke-width="3.5" stroke-linecap="round"/></svg>
           <div class="name">UNGUARANTEED</div>
-          <div class="vdesc">only sampled evidence. still needs human review.</div>
+          <p class="vdesc">only sampled evidence. still needs human review.</p>
         </div>
-        <div class="vcard v-bad" tabindex="0">
+        <div class="vcard v-bad">
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><line x1="23" y1="23" x2="41" y2="41" stroke-width="4.5" stroke-linecap="round"/><line x1="41" y1="23" x2="23" y2="41" stroke-width="4.5" stroke-linecap="round"/></svg>
           <div class="name">FAILED</div>
-          <div class="vdesc">a counterexample, with the input that breaks it.</div>
+          <p class="vdesc">a counterexample, with the input that breaks it.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="panel" id="demo">
+    <div class="inner">
+      <h2>see it run</h2>
+      <p class="kicker">one command, real output</p>
+      <div class="demo-term" id="demo-term">
+        <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">holdtrue verify</span></div>
+        <div class="demo-body">
+          <div class="demo-cmd"><span class="prompt">$</span> <span id="demo-type"></span><span class="dcursor" id="dcursor"></span></div>
+          <div class="demo-out" id="demo-out"></div>
+        </div>
+      </div>
+      <button class="replay" id="replay" type="button">replay</button>
     </div>
   </section>
 
@@ -329,12 +390,39 @@
       <h2>getting started</h2>
       <div class="cmdwrap">
         <button class="copy" type="button" aria-label="copy commands">copy</button>
-<pre class="cmd" id="cmd">git clone https://github.com/holdtrue-dev/holdtrue
+<pre class="cmd" id="cmd"><span class="cm"># 1. clone and install (uv pins the whole toolchain)</span>
+git clone https://github.com/holdtrue-dev/holdtrue
 cd holdtrue && uv sync
+
+<span class="cm"># 2. verify a correct implementation against its contract</span>
 uv run python -m holdtrue.cli verify examples/clamp \
   --impl examples/clamp/controls/correct.py</pre>
       </div>
-      <img class="powered" src="/powered.svg" alt="powered by deal, CrossHair, cosmic-ray, mypy, bubblewrap">
+      <div class="pwr">
+        <span class="pwr-eyebrow">powered by</span>
+        <div class="pwr-row">
+          <a class="logo" href="https://github.com/life4/deal" target="_blank" rel="noopener" aria-label="deal: contracts">
+            <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="28" cy="28" r="17"/><polyline points="18,29 25,36 39,18"/></svg>
+            <span class="lname">deal</span><span class="ltag">contracts</span>
+          </a>
+          <a class="logo" href="https://github.com/pschanely/CrossHair" target="_blank" rel="noopener" aria-label="CrossHair: proof">
+            <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="28" cy="28" r="13"/><line x1="28" y1="4" x2="28" y2="15"/><line x1="28" y1="41" x2="28" y2="52"/><line x1="4" y1="28" x2="15" y2="28"/><line x1="41" y1="28" x2="52" y2="28"/><circle cx="28" cy="28" r="2.5" fill="currentColor" stroke="none"/></svg>
+            <span class="lname">CrossHair</span><span class="ltag">proof</span>
+          </a>
+          <a class="logo" href="https://github.com/sixty-north/cosmic-ray" target="_blank" rel="noopener" aria-label="cosmic-ray: mutation">
+            <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="28" cy="28" r="3" fill="currentColor" stroke="none"/><line x1="36" y1="28" x2="51" y2="28"/><line x1="33.7" y1="33.7" x2="44.3" y2="44.3"/><line x1="28" y1="36" x2="28" y2="51"/><line x1="22.3" y1="33.7" x2="11.7" y2="44.3"/><line x1="20" y1="28" x2="5" y2="28"/><line x1="22.3" y1="22.3" x2="11.7" y2="11.7"/><line x1="28" y1="20" x2="28" y2="5"/><line x1="33.7" y1="22.3" x2="44.3" y2="11.7"/></svg>
+            <span class="lname">cosmic-ray</span><span class="ltag">mutation</span>
+          </a>
+          <a class="logo" href="https://github.com/python/mypy" target="_blank" rel="noopener" aria-label="mypy: types">
+            <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="24,14 12,28 24,42"/><polyline points="32,14 44,28 32,42"/><circle cx="28" cy="28" r="2.4" fill="currentColor" stroke="none"/></svg>
+            <span class="lname">mypy</span><span class="ltag">types</span>
+          </a>
+          <a class="logo" href="https://github.com/containers/bubblewrap" target="_blank" rel="noopener" aria-label="bubblewrap: sandbox">
+            <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="16" cy="21" r="6"/><circle cx="16" cy="35" r="6"/><circle cx="28" cy="21" r="6"/><circle cx="28" cy="35" r="6"/><circle cx="40" cy="21" r="6"/><circle cx="40" cy="35" r="6"/></svg>
+            <span class="lname">bubblewrap</span><span class="ltag">sandbox</span>
+          </a>
+        </div>
+      </div>
     </div>
     <footer class="foot">
       <a href="https://github.com/holdtrue-dev/holdtrue" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
@@ -371,6 +459,9 @@ uv run python -m holdtrue.cli verify examples/clamp \
     });
   }
 
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // hero teaser terminal
   (function playTerminal(){
     var term = document.getElementById("term");
     if (!term) return;
@@ -378,10 +469,9 @@ uv run python -m holdtrue.cli verify examples/clamp \
     var full = cmdEl.textContent;
     var lines = term.querySelectorAll(".ln");
     var stamp = term.querySelector(".stamp");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (reduce) {
       lines.forEach(function(l){ l.classList.add("show"); });
-      stamp.classList.add("show");
-      return;
+      stamp.classList.add("show"); return;
     }
     cmdEl.textContent = "";
     var i = 0;
@@ -396,6 +486,57 @@ uv run python -m holdtrue.cli verify examples/clamp \
         else { setTimeout(function(){ stamp.classList.add("show"); }, 260); }
       })();
     }
+  })();
+
+  // demo: replay the real `holdtrue verify` output in the browser
+  (function demo(){
+    var CMD = "holdtrue verify examples/clamp --impl examples/clamp/controls/correct.py";
+    var RULE = '<span class="dim">' + Array(49).join("─") + '</span>';
+    var LINES = [
+      '<span class="dim">holdtrue verify</span>  INT-001  <span class="dim">impl=</span>correct.py  <span class="dim">sandbox=</span>bwrap',
+      RULE,
+      '  <span class="ok">PASS</span>       types              <span class="dim">mypy --strict clean.</span>',
+      '  <span class="ok">CONFIRMED</span>  crosshair          <span class="dim">CrossHair exhausted all paths, confirmed.</span>',
+      '  <span class="ok">PASS</span>       hypothesis_shown   <span class="dim">property holds over sampled inputs.</span>',
+      '  <span class="ok">PASS</span>       hypothesis_heldout <span class="dim">property holds over held-out inputs.</span>',
+      '  <span class="ok">PASS</span>       negative_probe     <span class="dim">contract rejects all 4 broken bodies.</span>',
+      RULE,
+      '  VERDICT: <span class="gtd">GUARANTEED</span>    <span class="dim">(deciding: CHK-symbolic)</span>',
+      '    <span class="dim">- proof: CrossHair confirmed the contract over the whole input domain.</span>',
+      '    <span class="dim">- negative-probe: contract rejects all 4 broken bodies.</span>',
+      '    <span class="dim">- types: mypy --strict clean.</span>',
+      '  <span class="dim">human code review still required:</span> <span class="ok">no</span>',
+      '  <span class="dim">report: examples/clamp/reports/evidence_report.md</span>'
+    ];
+    var typeEl = document.getElementById("demo-type");
+    var outEl = document.getElementById("demo-out");
+    var cur = document.getElementById("dcursor");
+    var timers = [];
+    function clearAll(){ timers.forEach(clearTimeout); timers = []; }
+    function render(){
+      clearAll(); outEl.innerHTML = ""; typeEl.textContent = "";
+      var nodes = LINES.map(function(html){
+        var d = document.createElement("div"); d.innerHTML = html; outEl.appendChild(d); return d;
+      });
+      if (reduce) { typeEl.textContent = CMD; nodes.forEach(function(n){ n.classList.add("show"); }); cur.style.display = "none"; return; }
+      cur.style.display = "inline-block";
+      var i = 0;
+      (function type(){
+        if (i <= CMD.length) { typeEl.textContent = CMD.slice(0, i); i++; timers.push(setTimeout(type, 26)); }
+        else { stream(0); }
+      })();
+      function stream(k){
+        if (k >= nodes.length) { cur.style.display = "none"; return; }
+        nodes[k].classList.add("show");
+        timers.push(setTimeout(function(){ stream(k + 1); }, k === 8 ? 360 : 150));
+      }
+    }
+    var started = false;
+    var dio = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting && !started) { started = true; render(); } });
+    }, { threshold: 0.4 });
+    dio.observe(document.getElementById("demo"));
+    document.getElementById("replay").addEventListener("click", render);
   })();
 </script>
 </body>
