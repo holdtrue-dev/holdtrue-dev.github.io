@@ -99,10 +99,17 @@
   /* the journey */
   #journey .inner { max-width:1220px; }
   .foundation { margin:22px auto 0; max-width:980px; border-top:1px solid var(--line); padding-top:18px; }
-  .found-label { display:block; color:var(--muted); font-size:12.5px; letter-spacing:.1em; margin-bottom:14px; }
-  .found-row { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
-  .chip { font-size:13px; letter-spacing:.04em; color:var(--ctx); border:1px solid #1f4a44;
-    border-radius:20px; padding:5px 14px; background:rgba(43,214,192,.05); }
+  .found-label { display:block; color:var(--ink); font-size:clamp(14px,2.2vw,17px);
+    letter-spacing:.02em; margin-bottom:18px; }
+  .found-label b { color:var(--phosphor); font-weight:600; }
+  .found-row { display:flex; flex-wrap:wrap; gap:11px; justify-content:center; }
+  .chip { display:inline-flex; align-items:center; gap:7px; font-size:13px; letter-spacing:.04em;
+    color:var(--ctx); border:1px solid #1f4a44; border-radius:20px; padding:5px 14px;
+    background:rgba(43,214,192,.05); }
+  .chip svg { width:15px; height:15px; flex:0 0 auto; }
+  a.chip { transition:color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+  a.chip:hover { transform:translateY(-2px); border-color:currentColor;
+    box-shadow:0 0 16px -4px currentColor; filter:brightness(1.2); }
   .chip.api { color:#9fd0ff; border-color:#26415a; background:rgba(120,170,220,.05); }
   .chip.any { color:var(--muted); border-style:dashed; border-color:#2c4a3b; background:none; }
   .track { display:flex; align-items:stretch; justify-content:center; gap:6px;
@@ -355,16 +362,24 @@
         </div>
       </div>
       <div class="foundation">
-        <span class="found-label">the two AI contexts run on an assistant you choose</span>
+        <span class="found-label">any assistant, any model. <b>the proof is the same.</b></span>
         <div class="found-row">
-          <span class="chip">claude</span>
-          <span class="chip">aider</span>
-          <span class="chip">gemini</span>
-          <span class="chip">codex</span>
-          <span class="chip api">Anthropic</span>
-          <span class="chip api">OpenAI</span>
-          <span class="chip api">Ollama</span>
-          <span class="chip any">+ your own</span>
+          <a class="chip" href="https://claude.com/claude-code" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="6.3" y1="6.3" x2="17.7" y2="17.7"/><line x1="17.7" y1="6.3" x2="6.3" y2="17.7"/></svg>claude</a>
+          <a class="chip" href="https://aider.chat" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19l1-4L16 5a2 2 0 0 1 3 3L9 18l-4 1z"/><path d="M14 7l3 3"/></svg>aider</a>
+          <a class="chip" href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c.5 4.6 2.9 7 7.5 7.5C14.9 10 12.5 12.4 12 17c-.5-4.6-2.9-7-7.5-7.5C9.1 9 11.5 6.6 12 2z"/></svg>gemini</a>
+          <a class="chip" href="https://github.com/openai/codex" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></svg>codex</a>
+          <a class="chip api" href="https://docs.anthropic.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="6.3" y1="6.3" x2="17.7" y2="17.7"/><line x1="17.7" y1="6.3" x2="6.3" y2="17.7"/></svg>Anthropic</a>
+          <a class="chip api" href="https://platform.openai.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 4.5v9L12 21l-7.5-4.5v-9z"/></svg>OpenAI</a>
+          <a class="chip api" href="https://ollama.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 5l1.6 3.2M16 5l-1.6 3.2"/><circle cx="12" cy="13" r="6"/></svg>Ollama</a>
+          <span class="chip any">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></svg>your own</span>
         </div>
       </div>
     </div>
