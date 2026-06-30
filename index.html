@@ -98,6 +98,9 @@
 
   /* the journey */
   #journey .inner { max-width:1220px; }
+  .journey-gif { display:block; width:100%; max-width:1180px; height:auto; margin:6px auto 0;
+    border:1px solid var(--line); border-radius:12px; background:#0a0f0a;
+    box-shadow:0 0 44px rgba(51,255,102,.10); }
   .foundation { margin:22px auto 0; max-width:980px; border-top:1px solid var(--line); padding-top:18px; }
   .found-label { display:block; color:var(--ink); font-size:clamp(14px,2.2vw,17px);
     letter-spacing:.02em; margin-bottom:18px; }
@@ -315,55 +318,8 @@
     <div class="inner">
       <h2>how it works</h2>
       <p class="kicker">one intent, end to end</p>
-      <div class="track">
-        <div class="stop" style="--i:0">
-          <span class="num">01</span>
-          <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.4c.6.6 1 1.2 1 2.1h6c0-.9.4-1.5 1-2.1A6 6 0 0 0 12 3z"/></svg></span>
-          <span class="stitle">intent</span>
-          <span class="sdesc">what the code should do.</span>
-          <span class="tag you">you</span>
-        </div>
-        <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop ctx" style="--i:1">
-          <span class="num">02</span>
-          <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5a2 2 0 0 1 3 3L8 19l-4 1z"/><path d="M14 7l3 3"/></svg></span>
-          <span class="stitle">contract author</span>
-          <span class="sdesc">drafts the contract from your intent.</span>
-          <span class="tag ctx">ai &middot; context A</span>
-        </div>
-        <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop" style="--i:2">
-          <span class="num">03</span>
-          <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 12.5l2 2 4.5-4.5"/></svg></span>
-          <span class="stitle">the contract</span>
-          <span class="sdesc">you read it and approve. this, not the code.</span>
-          <span class="tag you">you</span>
-        </div>
-        <div class="curtain" aria-hidden="true"><span>the curtain</span></div>
-        <div class="stop ctx" style="--i:3">
-          <span class="num">04</span>
-          <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg></span>
-          <span class="stitle">implementer</span>
-          <span class="sdesc">writes the code from the contract alone.</span>
-          <span class="tag ctx">ai &middot; context B</span>
-        </div>
-        <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop" style="--i:4">
-          <span class="num">05</span>
-          <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
-          <span class="stitle">verify</span>
-          <span class="sdesc">sandboxed checks: types, proof, properties, probe, mutation.</span>
-          <span class="tag">holdtrue</span>
-        </div>
-        <span class="arrow" aria-hidden="true">&#8250;</span>
-        <div class="stop" style="--i:5">
-          <span class="num">06</span>
-          <span class="sicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12l2.2 2.2L16 9"/></svg></span>
-          <span class="stitle">the verdict</span>
-          <span class="sdesc">guaranteed, unguaranteed, or failed. with evidence.</span>
-          <span class="tag you">you</span>
-        </div>
-      </div>
+      <img class="journey-gif" src="/assets/architecture.gif"
+           alt="The holdtrue pipeline: intent, contract author, the contract you approve, the curtain, implementer, verify, the verdict.">
       <div class="foundation">
         <span class="found-label">any assistant, any model. <b>the proof is the same.</b></span>
         <div class="found-row">
