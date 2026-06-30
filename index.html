@@ -97,11 +97,12 @@
     margin:0 0 30px; }
 
   /* the journey */
-  #journey .inner { max-width:1220px; }
-  .journey-gif { display:block; width:100%; max-width:1180px; height:auto; margin:6px auto 0;
+  #journey .inner { max-width:1220px; display:flex; flex-direction:column; min-height:82vh; }
+  .hiw-main { margin-top:auto; }
+  .journey-gif { display:block; width:100%; max-width:1000px; height:auto; margin:0 auto;
     border:1px solid var(--line); border-radius:12px; background:#0a0f0a;
     box-shadow:0 0 44px rgba(51,255,102,.10); }
-  .foundation { margin:22px auto 0; max-width:980px; border-top:1px solid var(--line); padding-top:18px; }
+  .foundation { margin:auto auto 0; max-width:980px; border-top:1px solid var(--line); padding-top:18px; }
   .found-label { display:block; color:var(--ink); font-size:clamp(14px,2.2vw,17px);
     letter-spacing:.02em; margin-bottom:18px; }
   .found-label b { color:var(--phosphor); font-weight:600; }
@@ -155,8 +156,9 @@
   .intent-card .md-p { margin:0; color:#cfe0d4; font-size:clamp(15px,2.2vw,16.5px); line-height:1.7; }
   .intent-card code { color:var(--phosphor); background:rgba(51,255,102,.09); padding:1px 6px;
     border-radius:4px; font-size:.9em; }
-  .intent-note { margin-top:20px; font-size:13.5px; color:var(--muted); }
-  .intent-note b { color:var(--ctx); font-weight:600; }
+  .botnote { margin-top:22px; font-size:14px; color:var(--muted); }
+  .botnote b { color:var(--ctx); font-weight:600; }
+  .botnote.lg { font-size:clamp(16px,2.6vw,20px); margin-top:26px; }
 
   /* the contract */
   #contract .inner { max-width:1040px; }
@@ -296,7 +298,13 @@
     <div class="inner">
       <svg viewBox="0 0 660 50" role="img" aria-label="holdtrue" xmlns="http://www.w3.org/2000/svg" class="wordmark"><defs><filter id="g" x="-8%" y="-30%" width="116%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="#33ff66" filter="url(#g)"><rect x="0" y="0" width="20" height="10"/><rect x="50" y="0" width="20" height="10"/><rect x="90" y="0" width="60" height="10"/><rect x="170" y="0" width="20" height="10"/><rect x="250" y="0" width="60" height="10"/><rect x="330" y="0" width="80" height="10"/><rect x="420" y="0" width="60" height="10"/><rect x="500" y="0" width="20" height="10"/><rect x="560" y="0" width="20" height="10"/><rect x="590" y="0" width="70" height="10"/><rect x="0" y="10" width="20" height="10"/><rect x="50" y="10" width="20" height="10"/><rect x="80" y="10" width="20" height="10"/><rect x="140" y="10" width="20" height="10"/><rect x="170" y="10" width="20" height="10"/><rect x="250" y="10" width="20" height="10"/><rect x="300" y="10" width="20" height="10"/><rect x="360" y="10" width="20" height="10"/><rect x="420" y="10" width="20" height="10"/><rect x="470" y="10" width="20" height="10"/><rect x="500" y="10" width="20" height="10"/><rect x="560" y="10" width="20" height="10"/><rect x="590" y="10" width="20" height="10"/><rect x="0" y="20" width="70" height="10"/><rect x="80" y="20" width="20" height="10"/><rect x="140" y="20" width="20" height="10"/><rect x="170" y="20" width="20" height="10"/><rect x="250" y="20" width="20" height="10"/><rect x="300" y="20" width="20" height="10"/><rect x="360" y="20" width="20" height="10"/><rect x="420" y="20" width="60" height="10"/><rect x="500" y="20" width="20" height="10"/><rect x="560" y="20" width="20" height="10"/><rect x="590" y="20" width="50" height="10"/><rect x="0" y="30" width="20" height="10"/><rect x="50" y="30" width="20" height="10"/><rect x="80" y="30" width="20" height="10"/><rect x="140" y="30" width="20" height="10"/><rect x="170" y="30" width="20" height="10"/><rect x="250" y="30" width="20" height="10"/><rect x="300" y="30" width="20" height="10"/><rect x="360" y="30" width="20" height="10"/><rect x="420" y="30" width="20" height="10"/><rect x="470" y="30" width="20" height="10"/><rect x="500" y="30" width="20" height="10"/><rect x="560" y="30" width="20" height="10"/><rect x="590" y="30" width="20" height="10"/><rect x="0" y="40" width="20" height="10"/><rect x="50" y="40" width="20" height="10"/><rect x="90" y="40" width="60" height="10"/><rect x="170" y="40" width="70" height="10"/><rect x="250" y="40" width="60" height="10"/><rect x="360" y="40" width="20" height="10"/><rect x="420" y="40" width="20" height="10"/><rect x="470" y="40" width="20" height="10"/><rect x="510" y="40" width="60" height="10"/><rect x="590" y="40" width="70" height="10"/></g></svg>
       <div class="tagline">prove it. don't read it.</div>
-      <p class="subhead">AI writes the code.<br>You approve a contract. holdtrue <b>proves</b> it holds.</p>
+    </div>
+    <div class="cue" aria-hidden="true">&#9662;</div>
+  </section>
+
+  <section class="panel" id="pitch">
+    <div class="inner">
+      <p class="subhead">You approve a contract. AI writes the code. holdtrue <b>proves</b> it holds.</p>
       <div class="term" id="term" aria-label="a holdtrue verification run">
         <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">holdtrue</span></div>
         <div class="term-body">
@@ -316,10 +324,11 @@
 
   <section class="panel" id="journey">
     <div class="inner">
-      <h2>how it works</h2>
-      <p class="kicker">one intent, end to end</p>
-      <img class="journey-gif" src="/assets/architecture.gif"
-           alt="The holdtrue pipeline: intent, contract author, the contract you approve, the curtain, implementer, verify, the verdict.">
+      <div class="hiw-main">
+        <h2>how it works</h2>
+        <img class="journey-gif" src="/assets/architecture.gif"
+             alt="The holdtrue pipeline: intent, contract author, the contract you approve, the curtain, implementer, verify, the verdict.">
+      </div>
       <div class="foundation">
         <span class="found-label">any assistant, any model. <b>the proof is the same.</b></span>
         <div class="found-row">
@@ -347,19 +356,17 @@
   <section class="panel" id="intent">
     <div class="inner">
       <h2>the intent</h2>
-      <p class="kicker">plain language in</p>
       <div class="intent-card">
         <div class="md-h"># intent: clamp</div>
         <p class="md-p">Clamp a number into a range. Given <code>x</code>, <code>lo</code>, <code>hi</code>, return <code>x</code> if it sits inside <code>[lo, hi]</code>, otherwise return the nearest bound.</p>
       </div>
-      <p class="intent-note">You write this. <b>the rest is proof.</b></p>
+      <p class="botnote lg">You write this. <b>the rest is proof.</b></p>
     </div>
   </section>
 
   <section class="panel" id="contract">
     <div class="inner">
       <h2>the contract</h2>
-      <p class="kicker">every line, in plain words</p>
       <div class="contract-card">
         <div class="contract-grid">
           <code style="--i:0">@deal.pre(lambda x, lo, hi: lo &lt;= hi)</code>
@@ -374,13 +381,13 @@
           <div class="ann" style="--i:4"><b>signature.</b> the name and types to match.</div>
         </div>
       </div>
+      <p class="botnote">You approve this. <b>not the code.</b></p>
     </div>
   </section>
 
   <section class="panel" id="verdicts">
     <div class="inner">
       <h2>the verdict</h2>
-      <p class="kicker">no answer without evidence</p>
       <div class="verdicts">
         <div class="vcard v-ok">
           <svg viewBox="0 0 64 64" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="52" height="52" rx="12" stroke-width="2.5"/><polyline points="20,33 28,42 45,22" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -403,13 +410,13 @@
           <p class="vdesc">a counterexample, with the input that breaks it.</p>
         </div>
       </div>
+      <p class="botnote">no answer <b>without evidence.</b></p>
     </div>
   </section>
 
   <section class="panel" id="start">
     <div class="inner">
       <h2>getting started</h2>
-      <p class="kicker">clone, sync, verify</p>
       <div class="cmdwrap">
         <button class="copy" type="button" aria-label="copy commands">copy</button>
 <pre class="cmd" id="cmd"><span class="cm"># 1. clone and install (uv pins the whole toolchain)</span>
@@ -426,7 +433,6 @@ uv run python -m holdtrue.cli verify examples/clamp \
   <section class="panel" id="demo">
     <div class="inner">
       <h2>see it run</h2>
-      <p class="kicker">a real verification, start to finish</p>
       <div class="demo-term" id="demo-term">
         <div class="term-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="term-title">holdtrue verify</span></div>
         <div class="demo-body">
@@ -441,7 +447,6 @@ uv run python -m holdtrue.cli verify examples/clamp \
   <section class="panel" id="powered">
     <div class="inner">
       <h2>powered by</h2>
-      <p class="kicker">the toolchain it stands on</p>
       <div class="pwr">
         <div class="pwr-row">
           <a class="logo" href="https://github.com/life4/deal" target="_blank" rel="noopener" aria-label="deal: contracts">
