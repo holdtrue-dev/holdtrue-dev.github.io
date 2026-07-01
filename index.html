@@ -98,15 +98,8 @@
     margin:0 0 30px; }
 
   /* the journey */
-  #journey .inner { max-width:1220px; display:flex; flex-direction:column; min-height:82vh; }
-  .hiw-main { margin-top:auto; }
-  .journey-gif { display:block; width:100%; max-width:1000px; height:auto; margin:0 auto;
-    border:1px solid var(--line); border-radius:12px; background:#0a0f0a;
-    box-shadow:0 0 44px rgba(51,255,102,.10); }
-  .foundation { margin:auto auto 0; max-width:980px; border-top:1px solid var(--line); padding-top:18px; }
-  .found-label { display:block; color:var(--ink); font-size:clamp(14px,2.2vw,17px);
-    letter-spacing:.02em; margin-bottom:18px; }
-  .found-label b { color:var(--phosphor); font-weight:600; }
+  #journey .inner { max-width:1220px; }
+  .foundation { margin:26px auto 0; max-width:980px; }
   .found-row { display:flex; flex-wrap:wrap; gap:11px; justify-content:center; }
   .chip { display:inline-flex; align-items:center; gap:7px; font-size:13px; letter-spacing:.04em;
     color:var(--ctx); border:1px solid #1f4a44; border-radius:20px; padding:5px 14px;
@@ -118,36 +111,49 @@
   .chip.api { color:#9fd0ff; border-color:#26415a; background:rgba(120,170,220,.05); }
   .chip.any { color:var(--muted); border-style:dashed; border-color:#2c4a3b; background:none; }
   .track { display:flex; align-items:stretch; justify-content:center; gap:6px;
-    overflow-x:auto; padding:6px 2px 16px; scrollbar-width:none; }
+    overflow-x:auto; padding:6px 2px 26px; scrollbar-width:none; }
   .track::-webkit-scrollbar { display:none; }
-  .stop { --flow:var(--phosphor); flex:0 0 158px; border:1px solid var(--line); border-radius:12px;
-    background:rgba(10,16,10,.6); padding:16px 14px 15px; text-align:left;
-    display:flex; flex-direction:column; gap:8px; }
+  .stop { --flow:var(--phosphor); position:relative; flex:0 0 158px; min-height:132px;
+    border:1px solid var(--line); border-radius:12px; background:rgba(10,16,10,.6);
+    padding:16px 12px; text-align:center; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; }
   .stop.ctx { --flow:var(--ctx); }
-  .js .stop { opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+  .js .stop { opacity:0; transform:translateY(16px);
+    transition:opacity .5s ease, transform .5s ease, border-color .2s ease, box-shadow .2s ease; }
   .js .panel.in .stop { opacity:1; transform:none; transition-delay:calc(var(--i,0)*.11s);
     animation: stopflow 4.8s ease-in-out infinite; animation-delay:calc(var(--i,0)*.42s); }
-  .stop .num { font-size:11px; letter-spacing:.2em; color:var(--muted); }
+  .stop .num { position:absolute; top:13px; left:14px; font-size:11px; letter-spacing:.2em; color:var(--muted); }
   .stop .sicon { width:27px; height:27px; color:var(--phosphor); }
   .stop .sicon svg { width:100%; height:100%; }
   .stop.ctx .sicon { color:var(--ctx); }
-  .stop .stitle { font-size:15px; color:var(--ink); font-weight:600; letter-spacing:.02em; }
-  .stop .sdesc { font-size:12.5px; color:var(--muted); line-height:1.5; }
-  .stop .tag { margin-top:auto; font-size:10px; letter-spacing:.12em; text-transform:uppercase;
-    border:1px solid var(--line); border-radius:20px; padding:3px 10px; align-self:flex-start;
-    color:var(--phosphor-dim); }
+  .stop .stitle { font-size:15px; color:var(--ink); font-weight:600; letter-spacing:.02em; line-height:1.3; }
+  .stop .sdesc { position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    padding:12px 11px; font-size:10.5px; line-height:1.5; color:var(--ink); text-align:center;
+    opacity:0; pointer-events:none; transition:opacity .18s ease; }
+  .stop .tag { position:absolute; bottom:13px; left:50%; transform:translateX(-50%);
+    font-size:10px; letter-spacing:.12em; text-transform:uppercase;
+    border:1px solid var(--line); border-radius:20px; padding:3px 10px; color:var(--phosphor-dim); }
   .stop .tag.you { color:var(--ground); background:var(--phosphor); border-color:var(--phosphor); font-weight:700; }
   .stop .tag.ctx { color:var(--ctx); border-color:#1f4a44; }
   .arrow { align-self:center; color:#2c4a3b; font-size:22px; flex:0 0 auto; line-height:1; }
-  .curtain { flex:0 0 36px; align-self:stretch; position:relative; margin:8px 2px;
+  .curtain { flex:0 0 30px; align-self:stretch; position:relative; margin:6px 3px;
     display:flex; align-items:center; justify-content:center; }
   .curtain::before { content:""; position:absolute; top:0; bottom:0; left:50%; width:2px;
     transform:translateX(-50%); box-shadow:0 0 10px rgba(243,197,78,.5);
     background:repeating-linear-gradient(180deg, var(--warn) 0 7px, transparent 7px 15px); }
   .js .curtain::before { animation: curtainflow .85s linear infinite; }
-  .curtain span { position:relative; writing-mode:vertical-rl; color:var(--warn); font-weight:600;
-    font-size:13px; letter-spacing:.22em; text-transform:uppercase; background:var(--ground);
-    padding:9px 1px; text-shadow:0 0 12px rgba(243,197,78,.55); }
+  .curtain span { position:absolute; top:100%; left:50%; transform:translateX(-50%); margin-top:9px;
+    writing-mode:horizontal-tb; white-space:nowrap; color:var(--warn); font-weight:600;
+    font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+    text-shadow:0 0 12px rgba(243,197,78,.55); }
+
+  /* stage hover: swap the card's contents for its description, freeze the flow */
+  .stop .num, .stop .stitle, .stop .tag { transition:opacity .18s ease; }
+  .stop:hover .num, .stop:hover .stitle, .stop:hover .tag { opacity:0; }
+  .stop:hover .sdesc { opacity:1; }
+  .stop:hover { border-color:var(--flow); box-shadow:0 0 26px -8px var(--flow); }
+  #journey .track:hover .stop { animation:none; }
+  #journey .track:hover .curtain::before { animation:none; }
 
   /* the intent */
   #intent .inner { max-width:680px; }
@@ -271,7 +277,7 @@
     .curtain::before { left:0; right:0; top:50%; bottom:auto; width:auto; height:2px;
       transform:translateY(-50%);
       background:repeating-linear-gradient(90deg, var(--warn) 0 7px, transparent 7px 15px); animation:none; }
-    .curtain span { writing-mode:horizontal-tb; padding:1px 9px; }
+    .curtain span { position:static; transform:none; margin-top:0; padding:1px 9px; background:var(--ground); }
     .contract-grid { display:block; padding:18px 16px; }
     .contract-grid code { display:block; overflow-x:auto; padding-bottom:4px; }
     .contract-grid .ann { display:block; border-left:0; padding-left:0; margin:4px 0 16px; white-space:normal; }
@@ -324,13 +330,47 @@
 
   <section class="panel" id="journey">
     <div class="inner">
-      <div class="hiw-main">
-        <h2>how it works</h2>
-        <img class="journey-gif" src="/assets/architecture.gif"
-             alt="The holdtrue pipeline: intent, contract author, the contract you approve, the curtain, implementer, verify, the verdict.">
+      <h2>how it works</h2>
+      <div class="track">
+        <div class="stop" style="--i:0">
+          <span class="num">01</span>
+          <span class="stitle">intent</span>
+          <span class="tag you">you</span>
+          <span class="sdesc">you say what the code should do, in plain language.</span>
+        </div>
+        <span class="arrow" aria-hidden="true">&#8250;</span>
+        <div class="stop ctx" style="--i:1">
+          <span class="num">02</span>
+          <span class="stitle">contract author</span>
+          <span class="sdesc">AI drafts a machine-checkable contract from your intent.</span>
+        </div>
+        <span class="arrow" aria-hidden="true">&#8250;</span>
+        <div class="stop" style="--i:2">
+          <span class="num">03</span>
+          <span class="stitle">the contract</span>
+          <span class="tag you">you</span>
+          <span class="sdesc">you read it and approve. this, not the code, is what you sign off on.</span>
+        </div>
+        <div class="curtain" aria-hidden="true"><span>the curtain</span></div>
+        <div class="stop ctx" style="--i:3">
+          <span class="num">04</span>
+          <span class="stitle">implementer</span>
+          <span class="sdesc">AI writes the code from the contract alone.</span>
+        </div>
+        <span class="arrow" aria-hidden="true">&#8250;</span>
+        <div class="stop" style="--i:4">
+          <span class="num">05</span>
+          <span class="stitle">verify</span>
+          <span class="sdesc">holdtrue checks it in a sandbox with types, proof, properties, a negative-probe, and mutation.</span>
+        </div>
+        <span class="arrow" aria-hidden="true">&#8250;</span>
+        <div class="stop" style="--i:5">
+          <span class="num">06</span>
+          <span class="stitle">the verdict</span>
+          <span class="sdesc">holdtrue gives the final call, always with the evidence.</span>
+        </div>
       </div>
       <div class="foundation">
-        <span class="found-label">any assistant, any model. <b>the proof is the same.</b></span>
         <div class="found-row">
           <a class="chip" href="https://claude.com/claude-code" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="6.3" y1="6.3" x2="17.7" y2="17.7"/><line x1="17.7" y1="6.3" x2="6.3" y2="17.7"/></svg>claude</a>
@@ -350,6 +390,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></svg>your own</span>
         </div>
       </div>
+      <p class="botnote">any assistant, any model. <b>the proof is the same.</b></p>
     </div>
   </section>
 
@@ -360,7 +401,7 @@
         <div class="md-h"># intent: clamp</div>
         <p class="md-p">Clamp a number into a range. Given <code>x</code>, <code>lo</code>, <code>hi</code>, return <code>x</code> if it sits inside <code>[lo, hi]</code>, otherwise return the nearest bound.</p>
       </div>
-      <p class="botnote">You write this. <b>the rest is proof.</b></p>
+      <p class="botnote">you write this. <b>the rest is proof.</b></p>
     </div>
   </section>
 
@@ -381,7 +422,7 @@
           <div class="ann" style="--i:4"><b>signature.</b> the name and types to match.</div>
         </div>
       </div>
-      <p class="botnote">You approve this. <b>not the code.</b></p>
+      <p class="botnote">you approve this. <b>not the code.</b></p>
     </div>
   </section>
 
